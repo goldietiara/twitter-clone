@@ -9,9 +9,9 @@ export default async function Page() {
   //mongoose
   const userData = {
     id: user?.id,
-    objectId: userInfo?._id,
+    objectId: userInfo._id,
     username: userInfo?.username || user?.username,
-    name: userInfo?.name || user?.firstName || "",
+    name: userInfo?.name || user.firstName || "",
     bio: userInfo?.bio || "",
     image: userInfo?.image || user?.imageUrl,
   };
@@ -23,7 +23,7 @@ export default async function Page() {
         Complete your tasks now to use Twitter
       </h1>
       <section className="mt-9 bg-dark-2 p-10">
-        <AccountProfile />
+        <AccountProfile user={`${userData}`} buttonTitle="contiune" />
       </section>
     </main>
   );
