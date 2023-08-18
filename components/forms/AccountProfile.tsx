@@ -1,10 +1,9 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -47,10 +46,6 @@ export default function AccountProfile({
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      // profile_photo: user?.image || "",
-      // name: user?.name || "",
-      // username: user?.username || "",
-      // bio: user?.bio || "",
       profile_photo: user?.image ? user.image : "",
       name: user?.name ? user.name : "",
       username: user?.username ? user.username : "",
@@ -86,6 +81,7 @@ export default function AccountProfile({
 
     const hasImageChanged = isBase64Image(blob);
 
+    // upload image to uploadthing
     if (hasImageChanged) {
       const imageResponse = await startUpload(files);
       if (imageResponse && imageResponse[0].fileUrl) {
@@ -212,6 +208,7 @@ export default function AccountProfile({
             </FormItem>
           )}
         />
+        {/* PR ADD LOADING STATE */}
         <Button
           type="submit"
           className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200"

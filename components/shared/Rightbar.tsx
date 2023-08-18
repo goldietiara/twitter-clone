@@ -5,7 +5,7 @@ export default function Rightbar() {
         <h3 className=" text-heading4-medium">Suggested Communities</h3>
       </div>
       <div className=" flex flex-1 flex-col justify-start">
-        <h3 className=" text-heading4-medium">Suggested Users</h3>
+        <h3 className=" text-heading4-medium">Who to follow</h3>
       </div>
     </section>
   );
