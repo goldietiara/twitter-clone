@@ -4,8 +4,11 @@ import { currentUser } from "@clerk/nextjs";
 export default async function Page() {
   //clerk
   const user = await currentUser();
+  if (!user) return null; // to avoid typescript warnings
+
   //get user data from clerk
   const userInfo = {};
+
   //mongoose
   const userData = {
     id: user?.id,
@@ -15,6 +18,14 @@ export default async function Page() {
     bio: userInfo?.bio || "",
     image: userInfo?.image || user?.imageUrl,
   };
+  // const userData = {
+  //   id: user?.id,
+  //   objectId: userInfo._id,
+  //   username: user?.username,
+  //   name: user.firstName || "",
+  //   bio: "",
+  //   image: user?.imageUrl,
+  // };
 
   return (
     <main className="mx-auto flex max-w-3xl flex-col justify-start px-10 py-20">
@@ -23,7 +34,7 @@ export default async function Page() {
         Complete your tasks now to use Twitter
       </h1>
       <section className="mt-9 bg-dark-2 p-10">
-        <AccountProfile user={`${userData}`} buttonTitle="contiune" />
+        <AccountProfile user={userData} buttonTitle={"Continue"} />
       </section>
     </main>
   );

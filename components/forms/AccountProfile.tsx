@@ -47,14 +47,14 @@ export default function AccountProfile({
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      profile_photo: user?.image || "",
-      name: user?.name || "",
-      username: user?.username || "",
-      bio: user?.bio || "",
-      // profile_photo: user?.image ? user.image : "",
-      // name: user?.name ? user.name : "",
-      // username: user?.username ? user.username : "",
-      // bio: user?.bio ? user.bio : "",
+      // profile_photo: user?.image || "",
+      // name: user?.name || "",
+      // username: user?.username || "",
+      // bio: user?.bio || "",
+      profile_photo: user?.image ? user.image : "",
+      name: user?.name ? user.name : "",
+      username: user?.username ? user.username : "",
+      bio: user?.bio ? user.bio : "",
     },
   });
 
@@ -93,9 +93,9 @@ export default function AccountProfile({
       }
     }
 
-    //update user profile
-    //passing via an object then destructure it
-    //by this we dont have to worry if it on the same order or not (the database would be mixed up)
+    // update user profile
+    // passing via an object then destructure it
+    // by this we dont have to worry if it on the same order or not (the database would be mixed up)
 
     await updateUser({
       userId: user.id,
@@ -216,7 +216,7 @@ export default function AccountProfile({
           type="submit"
           className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200"
         >
-          Submit
+          {buttonTitle}
         </Button>
       </form>
     </Form>

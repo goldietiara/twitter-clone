@@ -10,8 +10,8 @@ import Leftbar from "@/components/shared/Leftbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Threads",
-  description: " A Next.js 13 Meta Threads Application",
+  title: "Twitter",
+  description: " A Next.js 13 Meta Twitter Application",
 };
 
 export default function RootLayout({
