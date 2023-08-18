@@ -20,6 +20,8 @@ import { ChangeEvent, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "@/lib/actions/user.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 interface AccountProfileProps {
   user: {
@@ -37,6 +39,8 @@ export default function AccountProfile({
   user,
   buttonTitle,
 }: AccountProfileProps) {
+  const pathname = usePathname();
+  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
 
@@ -88,7 +92,23 @@ export default function AccountProfile({
         values.profile_photo = imageResponse[0].fileUrl;
       }
     }
-    //UPDATE USER PROFILE YEAY
+
+    //update user profile
+    //passing via an object then destructure it
+    //by this we dont have to worry if it on the same order or not (the database would be mixed up)
+
+    await updateUser({
+      userId: user.id,
+      username: values.username,
+      name: values.name,
+      bio: values.bio,
+      image: values.profile_photo,
+      path: pathname,
+    });
+
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else router.push("/");
   }
 
   return (
