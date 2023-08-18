@@ -57,7 +57,7 @@ export default function TweetCard({
               />
             </Link>
 
-            <div className="thread-card_bar" />
+            <div className="tweet-card_bar" />
           </div>
 
           <div className="flex w-full flex-col">
@@ -78,7 +78,7 @@ export default function TweetCard({
                   height={24}
                   className="cursor-pointer object-contain"
                 />
-                <Link href={`/thread/${id}`}>
+                <Link href={`/tweet/${id}`}>
                   <Image
                     src="/assets/reply.svg"
                     alt="heart"
@@ -104,7 +104,7 @@ export default function TweetCard({
               </div>
 
               {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
+                <Link href={`/tweet/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>
@@ -114,8 +114,8 @@ export default function TweetCard({
           </div>
         </div>
 
-        {/* <DeleteThread
-          threadId={JSON.stringify(id)}
+        {/* <DeleteTweet
+          tweetId={JSON.stringify(id)}
           currentUserId={currentUserId}
           authorId={author.id}
           parentId={parentId}
@@ -136,7 +136,7 @@ export default function TweetCard({
             />
           ))}
 
-          <Link href={`/thread/${id}`}>
+          <Link href={`/tweet/${id}`}>
             <p className="mt-1 text-subtle-medium text-gray-1">
               {comments.length} repl{comments.length > 1 ? "ies" : "y"}
             </p>

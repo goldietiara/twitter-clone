@@ -25,7 +25,13 @@ export async function updateUser({
     connectToDB();
     await User.findOneAndUpdate(
       { id: userId },
-      { username: username.toLocaleLowerCase(), name, bio, image },
+      {
+        username: username.toLocaleLowerCase(),
+        name,
+        bio,
+        image,
+        onboard: true,
+      },
       { upsert: true }
     );
 
