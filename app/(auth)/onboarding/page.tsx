@@ -10,7 +10,7 @@ export default async function Page() {
 
   //mongodb
   const userInfo = await fetchUser(user.id);
-  if (userInfo?.onboarded) redirect("/");
+  if (userInfo?.onboard) redirect("/");
 
   const userData = {
     id: user?.id,

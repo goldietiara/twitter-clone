@@ -38,3 +38,69 @@ export async function createTweet({
     throw new Error(`Failed to post Tweet: ${error.message}`);
   }
 }
+
+//page pagination
+export async function fetchPosts(pageNumber = 1, pagesize = 20) {
+  connectToDB();
+
+  //number of posts to skip
+  const skipAmount = (pageNumber - 1) * pagesize;
+
+  const postQuery = Tweet.find({ parentId: { $in: [null, undefined] } })
+    .sort({
+      createdAt: "desc",
+    })
+    .skip(skipAmount)
+    .limit(pagesize)
+    .populate({ path: "author", model: User })
+    .populate({
+      path: "children",
+      populate: {
+        path: "author",
+        model: User,
+        select: "_id name parentId image",
+      },
+    });
+
+  const totalPostCount = await Tweet.countDocuments({
+    parentId: { $in: [null, undefined] },
+  });
+
+  const post = await postQuery.exec(); // execute
+
+  const isNext = totalPostCount > skipAmount + post.length;
+
+  return { post, isNext };
+}
+
+export async function fetchTweetById(id: string) {
+  try {
+    connectToDB();
+
+    const tweet = await Tweet.findById(id)
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id id name image",
+      })
+      .populate({
+        path: "children",
+        populate: [
+          {
+            path: "author",
+            model: User,
+            select: "_id id name parentId image",
+          },
+          {
+            path: "children",
+            model: Tweet,
+            select: "_id id name parentId image",
+          },
+        ],
+      })
+      .exec();
+    return tweet;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch comment ${error.message}`);
+  }
+}
