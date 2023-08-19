@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
 import Tweet from "../models/tweet.model";
+import { FilterQuery, SortOrder } from "mongoose";
 
 type UserActionProps = {
   userId: string;
@@ -77,5 +78,82 @@ export async function fetchUserPosts(userId: string) {
     return tweets;
   } catch (error: any) {
     throw new Error(`Failed to fetch user posts: ${error.message}`);
+  }
+}
+
+type FetchUsersProps = {
+  userId: string;
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: SortOrder;
+};
+
+export async function fetchUsers({
+  userId,
+  searchString = "",
+  pageNumber = 1,
+  pageSize = 20,
+  sortBy = "desc",
+}: FetchUsersProps) {
+  try {
+    connectToDB();
+    const skipAmount = (pageNumber - 1) * pageSize;
+    const regex = new RegExp(searchString, "i");
+
+    const query: FilterQuery<typeof User> = {
+      id: { $ne: userId },
+    };
+
+    if (searchString.trim() !== "") {
+      query.$or = [
+        { username: { $regex: regex } },
+        { name: { $regex: regex } },
+      ];
+    }
+
+    const sortOptions = { createdAt: sortBy };
+
+    const usersQuery = User.find(query)
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    const totalUsersCount = await User.countDocuments(query);
+
+    const users = await usersQuery.exec();
+
+    const isNext = totalUsersCount > skipAmount + users.length;
+
+    return { users, isNext };
+  } catch (error: any) {
+    throw new Error(`Failed to fetch users: ${error.message}`);
+  }
+}
+
+export async function getActivity(userId: string) {
+  try {
+    connectToDB();
+
+    //get all user tweets created by user
+    const userTweets = await Tweet.find({ author: userId });
+
+    //collect all replies id
+    const childrenTweetIds = userTweets.reduce((acc, userTweet) => {
+      return acc.concat(userTweet.children);
+    }, []);
+
+    const replies = await Tweet.find({
+      _id: { $in: childrenTweetIds },
+      author: { $ne: userId },
+    }).populate({
+      path: "author",
+      model: User,
+      select: "name image _id",
+    });
+
+    return replies;
+  } catch (error: any) {
+    throw new Error(`Failed to catch any activity: ${error.message}`);
   }
 }
