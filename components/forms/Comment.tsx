@@ -17,6 +17,7 @@ import { CommentValidation } from "@/lib/validations/tweet";
 import * as z from "zod";
 import { Input } from "../ui/input";
 import Image from "next/image";
+import { addCommentToTweet } from "@/lib/actions/tweet.actions";
 
 type CommentProps = {
   tweetId: string;
@@ -42,12 +43,14 @@ export default function Comment({
   });
 
   async function onSubmit(values: z.infer<typeof CommentValidation>) {
-    // await addComment({
-    //   text: values.tweet,
+    await addCommentToTweet(
+      tweetId,
+      values.tweet,
+      JSON.parse(currentUserId),
+      pathname
+    );
 
-    // });
-
-    router.push("/");
+    form.reset();
   }
 
   return (

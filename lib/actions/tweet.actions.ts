@@ -5,7 +5,7 @@ import Tweet from "../models/tweet.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
 
-interface CreateTweetProps {
+interface CreateTweetParams {
   text: string;
   author: string;
   communityId: string | null;
@@ -17,7 +17,7 @@ export async function createTweet({
   author,
   communityId,
   path,
-}: CreateTweetProps) {
+}: CreateTweetParams) {
   try {
     connectToDB();
 
@@ -102,5 +102,36 @@ export async function fetchTweetById(id: string) {
     return tweet;
   } catch (error: any) {
     throw new Error(`Failed to fetch comment ${error.message}`);
+  }
+}
+
+export async function addCommentToTweet(
+  tweetId: string,
+  commentText: string,
+  userId: string,
+  path: string
+) {
+  try {
+    connectToDB();
+
+    const originalTweet = await Tweet.findById(tweetId);
+
+    if (!originalTweet) throw new Error(`Tweet not found!`);
+
+    const commentTweet = new Tweet({
+      text: commentText,
+      author: userId,
+      parentId: tweetId,
+    });
+
+    const saveCommentTweet = await commentTweet.save();
+
+    originalTweet.children.push(saveCommentTweet._id);
+
+    await originalTweet.save();
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to post comment: ${error.message}`);
   }
 }

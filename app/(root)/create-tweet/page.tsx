@@ -10,7 +10,7 @@ export default async function CreateTweet() {
 
   const userInfo = await fetchUser(user.id);
 
-  if (!userInfo) redirect("/onboarding");
+  if (!userInfo.onboard) redirect("/onboarding");
 
   return (
     <main>

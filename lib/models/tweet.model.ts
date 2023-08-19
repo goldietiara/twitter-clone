@@ -28,6 +28,17 @@ const tweetSchema = new mongoose.Schema({
       //  reference to it self (recursion)
       //  meaning one thread could have multiple children
       //  and the children can have a children
+
+      // LOGIC
+      //-> Tweet Person (A) Parent (A)
+      //    -> Tweet Person (B) Children (A)
+      //    -> Tweet Person (C) Children (A) & Parent (C)
+      //       -> Tweet Person (B) Children (C)
+      //       -> Tweet Person (C) Children (C)
+      //       -> Tweet Person (A) Children (C) & Parent (A)
+      //           -> Tweet Person (E) Children (A)
+      //           -> Tweet Person (F) Children (A)
+      //           -> Tweet Person (G) Children (A)
     },
   ],
 });
