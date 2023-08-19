@@ -21,7 +21,8 @@ export default function Leftbar() {
             <Link
               href={v.route}
               key={v.label}
-              className={`leftsidebar_link ${isActive && `bg-sky-500`}`}
+              className={`leftsidebar_link hover:bg-gray-700 transition-all ease-out duration-500
+                ${isActive && "bg-blue"}`}
             >
               <Image src={v.imgURL} alt={v.label} width={24} height={24} />
               <p className=" text-light-1 max-lg:hidden">{v.label}</p>
