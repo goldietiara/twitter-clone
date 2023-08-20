@@ -20,7 +20,7 @@ export default async function Activity() {
         {result.length > 0 ? (
           <>
             {result.map((v) => (
-              <Link key={v._id} href={`/thread/${v.parentId}`}>
+              <Link key={v._id} href={`/tweet/${v.parentId}`}>
                 <article className="activity-card">
                   <Image
                     src={v.author.image}

@@ -26,7 +26,7 @@ const tweetSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tweet",
       //  reference to it self (recursion)
-      //  meaning one thread could have multiple children
+      //  meaning one tweet could have multiple children
       //  and the children can have a children
 
       // LOGIC

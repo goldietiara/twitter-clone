@@ -1,6 +1,7 @@
 import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteTweet from "../forms/DeleteTweet";
 
 type TweetCardProps = {
   id: string;
@@ -112,14 +113,13 @@ export default function TweetCard({
             </div>
           </div>
         </div>
-
-        {/* <DeleteTweet
+        <DeleteTweet
           tweetId={JSON.stringify(id)}
           currentUserId={currentUserId}
           authorId={author.id}
           parentId={parentId}
           isComment={isComment}
-        /> */}
+        />
       </div>
 
       {!isComment && comments.length > 0 && (
