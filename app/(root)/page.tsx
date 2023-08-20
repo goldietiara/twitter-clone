@@ -9,7 +9,9 @@ export default async function Home() {
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo.onboard) redirect("/onboarding");
+  if (!userInfo?.onboard) redirect("/onboarding");
+
+  // if (!userInfo.onboard) redirect("/onboarding");
 
   const result = await fetchPosts(1, 30);
 
