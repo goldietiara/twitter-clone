@@ -1,10 +1,23 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
-import { connectToDB } from "../mongoose";
 import Tweet from "../models/tweet.model";
+import Community from "../models/community.model";
+import { connectToDB } from "../mongoose";
 import { FilterQuery, SortOrder } from "mongoose";
+import { revalidatePath } from "next/cache";
+
+export async function fetchUser(userId: string) {
+  try {
+    await connectToDB();
+    return await User.findOne({ id: userId }).populate({
+      path: "communities",
+      model: Community,
+    });
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
 
 type UserActionProps = {
   userId: string;
@@ -45,19 +58,6 @@ export async function updateUser({
   }
 }
 
-export async function fetchUser(userId: string) {
-  try {
-    await connectToDB();
-    return await User.findOne({ id: userId });
-    // .populate({
-    //   path:'communities',
-    //   model: Community
-    // })
-  } catch (error: any) {
-    throw new Error(`Failed to fetch user: ${error.message}`);
-  }
-}
-
 export async function fetchUserPosts(userId: string) {
   try {
     connectToDB();
@@ -65,15 +65,22 @@ export async function fetchUserPosts(userId: string) {
     const tweets = await User.findOne({ id: userId }).populate({
       path: "tweets",
       model: Tweet,
-      populate: {
-        path: "children",
-        model: Tweet,
-        populate: {
-          path: "author",
-          model: User,
-          select: "name image id", // Select the "name" and "_id" fields from the "User" model
+      populate: [
+        {
+          path: "community",
+          model: Community,
+          select: "name id image _id", // Select the "name" and "_id" fields from the "Community" model
         },
-      },
+        {
+          path: "children",
+          model: Tweet,
+          populate: {
+            path: "author",
+            model: User,
+            select: "name image id", // Select the "name" and "_id" fields from the "User" model
+          },
+        },
+      ],
     });
     return tweets;
   } catch (error: any) {

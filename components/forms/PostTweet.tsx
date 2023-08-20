@@ -1,27 +1,22 @@
 "use client";
 
-import { useUploadThing } from "@/lib/uploadthing";
-import { UserValidation } from "@/lib/validations/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { TweetValidation } from "@/lib/validations/tweet";
-import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import Image from "next/image";
 import { createTweet } from "@/lib/actions/tweet.actions";
+import { useOrganization } from "@clerk/nextjs";
 
 type PostTweetProps = {
   userId: string;
@@ -31,6 +26,7 @@ type PostTweetProps = {
 export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { organization } = useOrganization();
 
   const form = useForm({
     resolver: zodResolver(TweetValidation),
@@ -44,7 +40,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
     await createTweet({
       text: values.tweet,
       author: userId,
-      communityId: null,
+      communityId: organization ? organization.id : null,
       path: pathname,
     });
 
