@@ -10,7 +10,7 @@ import Leftbar from "@/components/shared/Leftbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Twitter",
+  title: "Home | Twitter by Goldie Tiara",
   description: " A Next.js 13 Meta Twitter Application",
 };
 

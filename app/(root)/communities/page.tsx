@@ -16,7 +16,7 @@ async function Page({
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboard) redirect("/onboarding");
+  if (!userInfo.onboard) redirect("/onboarding");
 
   const result = await fetchCommunities({
     searchString: searchParams.q,

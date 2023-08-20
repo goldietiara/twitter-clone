@@ -1,6 +1,6 @@
 "use client";
 import { sidebarLinks } from "@/constants";
-import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
+import { SignOutButton, SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -34,7 +34,9 @@ export default function Leftbar() {
             </Link>
           );
         })}
+        <UserButton />
       </div>
+
       <div className="mt-10 px-6">
         <SignedIn>
           <SignOutButton signOutCallback={() => router.push("/sign-in")}>

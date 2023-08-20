@@ -3,22 +3,38 @@ import Comment from "@/components/forms/Comment";
 import { fetchTweetById } from "@/lib/actions/tweet.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 type TweetProps = {
   params: { id: string };
 };
 
-export default async function Tweet({ params }: TweetProps) {
-  if (!params.id) return null;
+const getTweet = cache(async (id: string) => {
+  const result = await fetchTweetById(id);
+  if (!result) return null;
+  return result;
+});
 
+export async function generateMetadata({
+  params: { id },
+}: TweetProps): Promise<Metadata> {
+  const tweet = await getTweet(id);
+  return {
+    title: `${tweet.author.name}: ${tweet.text} | Twitter by Goldie Tiara"`,
+  };
+}
+
+export default async function Tweet({ params }: TweetProps) {
   const user = await currentUser();
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo.onboard) redirect("/onboarding");
 
-  const result = await fetchTweetById(params.id);
+  const result = await getTweet(params.id);
+  // const result = await getTweet(id);
 
   return (
     <section>
