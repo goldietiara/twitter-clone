@@ -1,6 +1,7 @@
 import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import TweetCard from "../cards/TweetCard";
+import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 type TweetsTabProps = {
   currentUserId: string;
@@ -13,7 +14,12 @@ export default async function TweetsTab({
   accountId,
   accountType,
 }: TweetsTabProps) {
-  let result = await fetchUserPosts(accountId);
+  let result: any;
+  if (accountType === "Community") {
+    result = await fetchCommunityPosts(accountId);
+  } else {
+    result = await fetchUserPosts(accountId);
+  }
 
   if (!result) redirect("/");
 

@@ -104,7 +104,9 @@ export default function AccountProfile({
 
     if (pathname === "/profile/edit") {
       router.back();
-    } else router.push("/");
+    } else {
+      router.push("/");
+    }
   }
 
   return (
