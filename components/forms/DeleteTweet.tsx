@@ -35,6 +35,7 @@ export default function DeleteTweet({
         await deleteTweet(JSON.parse(tweetId), pathname);
         if (!parentId || !isComment) {
           router.push("/");
+          // PR: user profile
         }
       }}
     />

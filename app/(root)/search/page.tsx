@@ -13,7 +13,7 @@ export default async function Search({
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo.onboard) redirect("/onboarding");
+  if (!userInfo?.onboard) redirect("/onboarding");
 
   const result = await fetchUsers({
     userId: user.id,

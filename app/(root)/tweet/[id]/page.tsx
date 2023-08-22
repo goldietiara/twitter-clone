@@ -31,7 +31,7 @@ export default async function Tweet({ params }: TweetProps) {
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo.onboard) redirect("/onboarding");
+  if (!userInfo?.onboard) redirect("/onboarding");
 
   const result = await getTweet(params.id);
   // const result = await getTweet(id);

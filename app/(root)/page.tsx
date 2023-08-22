@@ -11,8 +11,6 @@ export default async function Home() {
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboard) redirect("/onboarding");
 
-  // if (!userInfo.onboard) redirect("/onboarding");
-
   const result = await fetchPosts(1, 30);
 
   return (
