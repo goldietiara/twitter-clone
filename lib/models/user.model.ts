@@ -20,6 +20,24 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Community",
   },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tweet",
+    },
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

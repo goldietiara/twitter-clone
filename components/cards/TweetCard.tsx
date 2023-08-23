@@ -2,6 +2,8 @@ import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteTweet from "../forms/DeleteTweet";
+import PostButtons from "../shared/PostButtons";
+import { TbMessage2, TbShare2 } from "react-icons/tb";
 
 type TweetCardProps = {
   id: string;
@@ -25,6 +27,9 @@ type TweetCardProps = {
     };
   }[];
   isComment?: boolean;
+  image: string;
+  likes: string[];
+  userInfoId: string;
 };
 
 export default function TweetCard({
@@ -37,6 +42,9 @@ export default function TweetCard({
   createdAt,
   comments,
   isComment,
+  image,
+  likes,
+  userInfoId,
 }: TweetCardProps) {
   return (
     //article usually used to create card
@@ -68,44 +76,44 @@ export default function TweetCard({
             </Link>
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
+            {image ? (
+              <div className="relative h-fit overflow-auto w-full bg-pink-300">
+                <Image
+                  src={image}
+                  alt="tweet_image"
+                  width={500}
+                  height={500}
+                  className=" rounded-md col-span-1"
+                />
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">
-                <Image
-                  src="/assets/heart-gray.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-                <Link href={`/tweet/${id}`}>
-                  <Image
-                    src="/assets/reply.svg"
-                    alt="heart"
-                    width={24}
-                    height={24}
-                    className="cursor-pointer object-contain"
+                <div className="flex gap-5 text-slate-400 cursor-pointer text-heading4-medium items-center">
+                  <PostButtons
+                    post={id}
+                    userInfoId={userInfoId}
+                    likes={likes}
                   />
-                </Link>
-                <Image
-                  src="/assets/repost.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-                <Image
-                  src="/assets/share.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
+
+                  <Link
+                    href={`/tweet/${id}`}
+                    className="flex items-center gap-1 hover:text-sky-400 transition-all ease-out duration-200 cursor-pointer"
+                  >
+                    <TbMessage2 />
+                    <p className="text-small-regular">{comments.length}</p>
+                  </Link>
+
+                  <TbShare2 className=" hover:text-emerald-400 transition-all ease-out duration-200 cursor-pointer" />
+                </div>
               </div>
 
               {isComment && comments.length > 0 && (
                 <Link href={`/tweet/${id}`}>
-                  <p className="mt-1 text-subtle-medium text-gray-1">
+                  <p className="mt-1 text-small-regular text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>
                 </Link>
@@ -162,6 +170,7 @@ export default function TweetCard({
           />
         </Link>
       )}
+      {/* <TweetButtons author={author1} post={id} /> */}
     </article>
   );
 }

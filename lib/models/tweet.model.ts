@@ -5,6 +5,7 @@ const tweetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: String,
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -39,6 +40,12 @@ const tweetSchema = new mongoose.Schema({
       //           -> Tweet Person (E) Children (A)
       //           -> Tweet Person (F) Children (A)
       //           -> Tweet Person (G) Children (A)
+    },
+  ],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   ],
 });

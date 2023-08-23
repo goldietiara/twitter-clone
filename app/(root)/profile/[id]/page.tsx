@@ -6,6 +6,8 @@ import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchUser } from "@/lib/actions/user.actions";
 import TweetsTab from "@/components/shared/TweetsTab";
+import { getUserLikes } from "@/lib/actions/like.actions";
+import LikesTab from "@/components/shared/LikesTab";
 
 type UserProfileParams = {
   params: { id: string };
@@ -17,6 +19,8 @@ export default async function UserProfile({ params }: UserProfileParams) {
 
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboard) redirect("/onboarding");
+
+  const LikePosts = await getUserLikes(userInfo._id);
 
   return (
     <section>
@@ -47,23 +51,28 @@ export default async function UserProfile({ params }: UserProfileParams) {
                     {userInfo.tweets.length}
                   </p>
                 )}
+                {tab.label === "Likes" && (
+                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
+                    {userInfo.likes.length}
+                  </p>
+                )}
               </TabsTrigger>
             ))}
           </TabsList>
-          {profileTabs.map((tab) => (
-            <TabsContent
-              key={`content-${tab.label}`}
-              value={tab.value}
-              className="w-full text-light-1"
-            >
-              {/* @ts-ignore */}
-              <TweetsTab
-                currentUserId={user.id}
-                accountId={userInfo.id}
-                accountType="User"
-              />
-            </TabsContent>
-          ))}
+          <TabsContent value="tweets" className="w-full text-light-1">
+            <TweetsTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              userInfoId={userInfo._id}
+              accountType="User"
+            />
+          </TabsContent>
+          <TabsContent value="likes" className="w-full text-light-1">
+            <LikesTab userInfoId={LikePosts._id} accountId={LikePosts.likes} />
+            {LikePosts.likes.map((v: any) => {
+              return <p className="text-pink-50">{v.text}</p>;
+            })}
+          </TabsContent>
         </Tabs>
       </div>
     </section>

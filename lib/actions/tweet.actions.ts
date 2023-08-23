@@ -47,6 +47,7 @@ export async function fetchPosts(pageNumber = 1, pagesize = 20) {
 interface CreateTweetParams {
   text: string;
   author: string;
+  image?: string;
   communityId: string | null;
   path: string;
 }
@@ -54,6 +55,7 @@ interface CreateTweetParams {
 export async function createTweet({
   text,
   author,
+  image,
   communityId,
   path,
 }: CreateTweetParams) {
@@ -68,6 +70,7 @@ export async function createTweet({
     const createdTweet = await Tweet.create({
       text,
       author,
+      image,
       community: communityIdObject,
     });
 
@@ -229,5 +232,50 @@ export async function addCommentToTweet(
     revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to post comment: ${error.message}`);
+  }
+}
+
+interface followUnfollowParams {
+  currentUser: string;
+  otherUser: string;
+  path: string;
+}
+
+export async function followUnfollow({
+  currentUser,
+  otherUser,
+  // post,
+  path,
+}: followUnfollowParams) {
+  try {
+    connectToDB();
+
+    const userToFollow = await User.findById(otherUser);
+
+    if (!userToFollow) {
+      throw new Error("Tweet not found");
+    }
+
+    if (!userToFollow.followers.includes(currentUser)) {
+      userToFollow.followers.push(currentUser);
+      await userToFollow.save();
+
+      const currentUserFollowing = await User.findById(currentUser);
+      currentUserFollowing.following.push(otherUser);
+      await currentUserFollowing.save();
+    }
+
+    //   const user = await User.findById(currentUser);
+    //   user.likes.push(post);
+    //   await user.save();
+    // } else {
+    //   tweet.likes = tweet.likes.filter(
+    //     (id: any) => id.toString() !== currentUser
+    //   );
+    //   await tweet.save();
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to like Tweet: ${error.message}`);
   }
 }

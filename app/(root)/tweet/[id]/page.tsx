@@ -44,12 +44,15 @@ export default async function Tweet({ params }: TweetProps) {
           key={result._id}
           id={result._id}
           currentUserId={user?.id || ""}
+          image={result.image}
           parentId={result.parentId}
           content={result.text}
           author={result.author}
           community={result.community}
           createdAt={result.createdAt}
           comments={result.children}
+          likes={result.likes}
+          userInfoId={userInfo._id}
         />
       </div>
       <div className="mt-7">
@@ -67,11 +70,14 @@ export default async function Tweet({ params }: TweetProps) {
             id={v._id}
             currentUserId={user.id}
             parentId={v.parentId}
+            image={v.image}
             content={v.text}
             author={v.author}
             community={v.community}
             createdAt={v.createdAt}
             comments={v.children}
+            likes={v.likes}
+            userInfoId={userInfo._id}
             isComment
           />
         ))}

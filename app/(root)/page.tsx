@@ -28,10 +28,13 @@ export default async function Home() {
                 currentUserId={user?.id || ""}
                 parentId={v.parentId}
                 content={v.text}
+                image={v.image}
                 author={v.author}
                 community={v.community}
                 createdAt={v.createdAt}
                 comments={v.children}
+                likes={v.likes}
+                userInfoId={userInfo._id}
               />
             ))}
           </>
