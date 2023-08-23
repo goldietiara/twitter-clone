@@ -6,7 +6,7 @@ import { fetchTweetById } from "@/lib/actions/tweet.actions";
 import { fetchLikedPosts } from "@/lib/actions/like.actions";
 
 type TweetsTabProps = {
-  accountId: { id: string };
+  accountId: string;
   userInfoId: string;
 };
 
@@ -14,8 +14,7 @@ export default async function LikesTab({
   accountId,
   userInfoId,
 }: TweetsTabProps) {
-  const result = await fetchLikedPosts(accountId.id);
-  console.log(result);
+  const result = await fetchLikedPosts(accountId);
 
   if (!result) redirect("/");
 

@@ -69,7 +69,7 @@ export async function fetchLikedPosts(tweetId: string) {
   try {
     connectToDB();
     // Find all tweets authored by the user with the given userId
-    const tweets = await Tweet.find({ id: tweetId }).populate([
+    const tweets = await Tweet.find({ _id: tweetId }).populate([
       {
         path: "community",
         model: Community,

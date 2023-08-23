@@ -69,9 +69,6 @@ export default async function UserProfile({ params }: UserProfileParams) {
           </TabsContent>
           <TabsContent value="likes" className="w-full text-light-1">
             <LikesTab userInfoId={LikePosts._id} accountId={LikePosts.likes} />
-            {LikePosts.likes.map((v: any) => {
-              return <p className="text-pink-50">{v.text}</p>;
-            })}
           </TabsContent>
         </Tabs>
       </div>
