@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <>
       <h1 className="text-heading3-bold text-white">Home</h1>
-      <section className="mt-9 flex flex-col gap-10">
+      <section className="mt-9 flex flex-col gap-5">
         {result.post.length === 0 ? (
           <p className="no-result">No tweets found</p>
         ) : (

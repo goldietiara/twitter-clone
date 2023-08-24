@@ -181,11 +181,6 @@ export async function fetchTweetById(id: string) {
             model: User,
             select: "_id id name parentId image",
           },
-          // {
-          //   path: "children",
-          //   model: Tweet,
-          //   select: "_id id name parentId image",
-          // },
           {
             path: "children",
             model: Tweet,

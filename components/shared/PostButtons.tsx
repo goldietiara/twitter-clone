@@ -35,9 +35,19 @@ export default function PostButtons({
       onClick={() => addLike()}
     >
       {likes.includes(userInfoId) ? (
-        <TbHeartFilled className=" text-pink-700" />
+        <TbHeartFilled
+          className={
+            pending ? ` animate-pulse text-pink-700` : ` text-pink-700`
+          }
+        />
       ) : (
-        <TbHeart className=" group-hover:text-pink-700 text-gray-400" />
+        <TbHeart
+          className={
+            pending
+              ? ` animate-bounce group-hover:text-pink-700 text-gray-400`
+              : ` group-hover:text-pink-700 text-gray-400`
+          }
+        />
       )}
       <span
         className={
@@ -46,7 +56,7 @@ export default function PostButtons({
             : ` text-small-regular text-gray-400 group-hover:text-pink-700`
         }
       >
-        {pending ? "loading" : likes.length}
+        {likes.length > 0 ? likes.length : ""}
       </span>
     </div>
   );
