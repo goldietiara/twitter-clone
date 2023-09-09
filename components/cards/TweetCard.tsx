@@ -76,7 +76,9 @@ export default function TweetCard({
             </Link>
 
             <Link href={`/tweet/${id}`}>
-              <p className="mt-2 text-small-regular text-light-2">{content}</p>
+              <p className="mt-2 text-small-regular text-light-2 mb-2">
+                {content}
+              </p>
               {image ? (
                 <div className="relative h-fit overflow-auto w-full">
                   <Image
