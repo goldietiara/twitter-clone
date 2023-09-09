@@ -30,6 +30,7 @@ type TweetCardProps = {
   image: string;
   likes: string[];
   userInfoId: string;
+  isDelete?: string;
 };
 
 export default function TweetCard({
@@ -45,6 +46,7 @@ export default function TweetCard({
   image,
   likes,
   userInfoId,
+  isDelete,
 }: TweetCardProps) {
   return (
     //article usually used to create card
@@ -125,13 +127,17 @@ export default function TweetCard({
             </div>
           </div>
         </div>
-        <DeleteTweet
-          tweetId={JSON.stringify(id)}
-          currentUserId={currentUserId}
-          authorId={author.id}
-          parentId={parentId}
-          isComment={isComment}
-        />
+        {isDelete ? (
+          ""
+        ) : (
+          <DeleteTweet
+            tweetId={JSON.stringify(id)}
+            currentUserId={currentUserId}
+            authorId={author.id}
+            parentId={parentId}
+            isComment={isComment}
+          />
+        )}
       </div>
 
       {!isComment && comments.length > 0 && (

@@ -8,11 +8,13 @@ import { fetchLikedPosts } from "@/lib/actions/like.actions";
 type TweetsTabProps = {
   accountId: string;
   userInfoId: string;
+  isDelete: string;
 };
 
 export default async function LikesTab({
   accountId,
   userInfoId,
+  isDelete,
 }: TweetsTabProps) {
   const result = await fetchLikedPosts(accountId);
 
@@ -38,6 +40,7 @@ export default async function LikesTab({
           image={v.image}
           userInfoId={userInfoId}
           likes={v.likes}
+          isDelete={isDelete}
         />
       ))}
     </section>

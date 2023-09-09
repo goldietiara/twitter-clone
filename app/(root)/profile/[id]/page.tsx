@@ -8,6 +8,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import TweetsTab from "@/components/shared/TweetsTab";
 import { getUserLikes } from "@/lib/actions/like.actions";
 import LikesTab from "@/components/shared/LikesTab";
+import { TbHeart, TbMessage2, TbPhoto } from "react-icons/tb";
 
 type UserProfileParams = {
   params: { id: string };
@@ -37,14 +38,16 @@ export default async function UserProfile({ params }: UserProfileParams) {
           <TabsList className="tab">
             {profileTabs.map((tab) => (
               <TabsTrigger key={tab.label} value={tab.value} className="tab">
-                <Image
-                  src={tab.icon}
-                  alt={tab.label}
-                  width={24}
-                  height={24}
-                  className="object-contain"
-                />
-                <p className="max-sm:hidden">{tab.label}</p>
+                <p className=" text-heading3-bold">
+                  {tab.value === "tweets" ? (
+                    <TbMessage2 />
+                  ) : tab.value === "media" ? (
+                    <TbPhoto />
+                  ) : (
+                    <TbHeart />
+                  )}
+                </p>
+                <p className="max-sm:hidden pl-3">{tab.label}</p>
               </TabsTrigger>
             ))}
           </TabsList>
@@ -65,7 +68,11 @@ export default async function UserProfile({ params }: UserProfileParams) {
             />
           </TabsContent>
           <TabsContent value="likes" className="w-full text-light-1">
-            <LikesTab userInfoId={LikePosts._id} accountId={LikePosts.likes} />
+            <LikesTab
+              userInfoId={LikePosts._id}
+              accountId={LikePosts.likes}
+              isDelete={userInfo._id}
+            />
           </TabsContent>
         </Tabs>
       </div>

@@ -131,7 +131,7 @@
 
 /* Tab */
 .tab {
-  @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 hover:text-sky-300 data-[state=active]:text-blue transition-all ease-out duration-500 !important;
+  @apply flex min-h-[50px] flex-1 items-center bg-transparent border-b-[2px] border-dark-2 text-gray-400 hover:text-light-2 data-[state=active]:text-light-2 data-[state=active]:border-b-4 data-[state=active]:border-blue transition-all ease-out duration-200 rounded-none !important;
 }
 
 .no-focus {

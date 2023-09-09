@@ -12,13 +12,13 @@ export default function Bottombar() {
       <div className="bottombar_container">
         {sidebarLinks.map((v) => {
           const isActive =
-            (pathname.includes(v.route) && v.route.length) ||
+            (pathname.includes(v.route) && v.route.length > 1) ||
             pathname === v.route;
           return (
             <Link
               href={v.route}
               key={v.label}
-              className={`bottombar_link ${isActive && ` bg-sky-500`}`}
+              className={`bottombar_link ${isActive && ` bg-blue`}`}
             >
               <Image src={v.imgURL} alt={v.label} width={24} height={24} />
               <p className="text-subtle-medium text-light-1 max-sm:hidden">
