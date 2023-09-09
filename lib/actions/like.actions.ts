@@ -53,7 +53,7 @@ export async function getUserLikes(userInfoId: string) {
 
     const user = await User.findOne({ _id: userInfoId }).populate({
       path: "likes",
-      select: "_id text author",
+      select: "_id text author username",
       populate: {
         path: "author",
         select: "_id id",
@@ -78,7 +78,7 @@ export async function fetchLikedPosts(tweetId: string) {
       {
         path: "author",
         model: User,
-        select: "name id image _id", // Select the "name" and "_id" fields from the "Community" model
+        select: "name id image _id username", // Select the "name" and "_id" fields from the "Community" model
       },
       {
         path: "children",
@@ -86,7 +86,7 @@ export async function fetchLikedPosts(tweetId: string) {
         populate: {
           path: "author",
           model: User,
-          select: "name image id _id", // Select the "name" and "_id" fields from the "User" model
+          select: "name image id _id username", // Select the "name" and "_id" fields from the "User" model
         },
       },
     ]);

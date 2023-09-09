@@ -3,6 +3,12 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+export async function generateMetadata() {
+  return {
+    title: `What is happening?! | Twitter by Goldie Tiara"`,
+  };
+}
+
 export default async function CreateTweet() {
   const user = await currentUser();
   if (!user) return null;

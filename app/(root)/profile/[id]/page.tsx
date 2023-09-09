@@ -9,16 +9,33 @@ import TweetsTab from "@/components/shared/TweetsTab";
 import { getUserLikes } from "@/lib/actions/like.actions";
 import LikesTab from "@/components/shared/LikesTab";
 import { TbHeart, TbMessage2, TbPhoto } from "react-icons/tb";
+import { cache } from "react";
+import { Metadata } from "next";
 
 type UserProfileParams = {
   params: { id: string };
 };
 
+const getUser = cache(async (id: string) => {
+  const result = await fetchUser(id);
+  if (!result) return null;
+  return result;
+});
+
+export async function generateMetadata({
+  params,
+}: UserProfileParams): Promise<Metadata> {
+  const user = await getUser(params.id);
+  return {
+    title: `${user.name} (@${user.username}) | Twitter by Goldie Tiara"`,
+  };
+}
+
 export default async function UserProfile({ params }: UserProfileParams) {
   const user = await currentUser();
   if (!user) return null;
 
-  const userInfo = await fetchUser(params.id);
+  const userInfo = await getUser(params.id);
   if (!userInfo?.onboard) redirect("/onboarding");
 
   const LikePosts = await getUserLikes(userInfo._id);
@@ -33,7 +50,7 @@ export default async function UserProfile({ params }: UserProfileParams) {
         imgUrl={userInfo.image}
         bio={userInfo.bio}
       />
-      <div className="mt-7">
+      <div>
         <Tabs defaultValue="tweets" className="w-full">
           <TabsList className="tab">
             {profileTabs.map((tab) => (

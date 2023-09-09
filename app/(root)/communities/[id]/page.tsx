@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { currentUser } from "@clerk/nextjs";
 
 import { communityTabs } from "@/constants";
@@ -8,12 +7,37 @@ import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 import TweetsTab from "@/components/shared/TweetsTab";
+import { TbMessage2, TbPhoto, TbUsers } from "react-icons/tb";
+import { fetchUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
+import { Metadata } from "next";
+import { cache } from "react";
+
+const getCommunity = cache(async (id: string) => {
+  const result = await fetchCommunityDetails(id);
+  if (!result) return null;
+  return result;
+});
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const community = await getCommunity(params.id);
+  return {
+    title: `${community.name} | Twitter by Goldie Tiara"`,
+  };
+}
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
 
-  const communityDetails = await fetchCommunityDetails(params.id);
+  const userInfo = await fetchUser(user.id);
+  if (!userInfo?.onboard) redirect("/onboarding");
+
+  const communityDetails = await getCommunity(params.id);
 
   return (
     <section>
@@ -27,19 +51,21 @@ async function Page({ params }: { params: { id: string } }) {
         type="Community"
       />
 
-      <div className="mt-9">
+      <div>
         <Tabs defaultValue="tweets" className="w-full">
           <TabsList className="tab">
             {communityTabs.map((tab) => (
               <TabsTrigger key={tab.label} value={tab.value} className="tab">
-                <Image
-                  src={tab.icon}
-                  alt={tab.label}
-                  width={24}
-                  height={24}
-                  className="object-contain"
-                />
-                <p className="max-sm:hidden">{tab.label}</p>
+                <p className=" text-heading3-bold">
+                  {tab.value === "tweets" ? (
+                    <TbMessage2 />
+                  ) : tab.value === "media" ? (
+                    <TbPhoto />
+                  ) : (
+                    <TbUsers />
+                  )}
+                </p>
+                <p className="max-sm:hidden pl-3">{tab.label}</p>
 
                 {tab.label === "Tweets" && (
                   <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
@@ -55,7 +81,18 @@ async function Page({ params }: { params: { id: string } }) {
             <TweetsTab
               currentUserId={user.id}
               accountId={communityDetails._id}
+              userInfoId={userInfo._id}
               accountType="Community"
+            />
+          </TabsContent>
+
+          <TabsContent value="media" className="w-full text-light-1">
+            {/* @ts-ignore */}
+            <TweetsTab
+              currentUserId={user.id}
+              accountId={communityDetails._id}
+              userInfoId={userInfo._id}
+              accountType="Media"
             />
           </TabsContent>
 
@@ -72,15 +109,6 @@ async function Page({ params }: { params: { id: string } }) {
                 />
               ))}
             </section>
-          </TabsContent>
-
-          <TabsContent value="requests" className="w-full text-light-1">
-            {/* @ts-ignore */}
-            <TweetsTab
-              currentUserId={user.id}
-              accountId={communityDetails._id}
-              accountType="Community"
-            />
           </TabsContent>
         </Tabs>
       </div>

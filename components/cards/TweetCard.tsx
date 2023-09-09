@@ -12,6 +12,7 @@ type TweetCardProps = {
   content: string;
   author: {
     name: string;
+    username: string;
     image: string;
     id: string;
   };
@@ -72,8 +73,14 @@ export default function TweetCard({
 
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author.id}`} className="w-fit">
-              <h4 className="cursor-pointer text-base-semibold text-light-1">
+              <h4 className="cursor-pointer text-base-semibold text-light-1 flex gap-3 items-center">
                 {author.name}
+                <span className="text-[14px] text-gray-1 text-ellipsis overflow-hidden">
+                  @{author.username}
+                </span>
+                <span className="text-[14px] text-gray-1">
+                  {formatDateString(createdAt)}
+                </span>
               </h4>
             </Link>
 
@@ -139,7 +146,6 @@ export default function TweetCard({
           />
         )}
       </div>
-
       {!isComment && comments.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
@@ -160,15 +166,13 @@ export default function TweetCard({
           </Link>
         </div>
       )}
-
       {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-gray-1">
-            {formatDateString(createdAt)}
-            {community && ` - ${community.name} Community`}
+            {community && `${community.name} Community`}
           </p>
 
           <Image

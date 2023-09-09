@@ -77,7 +77,7 @@ export async function fetchUserPosts(userId: string) {
           populate: {
             path: "author",
             model: User,
-            select: "name image id", // Select the "name" and "_id" fields from the "User" model
+            select: "name image id username", // Select the "name" and "_id" fields from the "User" model
           },
         },
       ],
@@ -108,7 +108,7 @@ export async function fetchUserMedia(userId: string) {
           populate: {
             path: "author",
             model: User,
-            select: "name image id", // Select the "name" and "_id" fields from the "User" model
+            select: "name image id username", // Select the "name" and "_id" fields from the "User" model
           },
         },
       ],
@@ -188,7 +188,7 @@ export async function getActivity(userId: string) {
     }).populate({
       path: "author",
       model: User,
-      select: "name image _id ",
+      select: "name image _id username",
     });
 
     return replies;
