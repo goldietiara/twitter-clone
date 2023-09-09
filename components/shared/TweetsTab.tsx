@@ -22,7 +22,7 @@ export default async function TweetsTab({
     console.log(result.tweets);
   } else if (accountType === "User") {
     result = await fetchUserPosts(accountId);
-    if (!result)
+    if (!result || result.tweets.length < 1)
       return (
         <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80">
           <TbMessageChatbot className=" text-[100px]" />
@@ -31,7 +31,7 @@ export default async function TweetsTab({
       );
   } else {
     result = await fetchUserMedia(accountId);
-    if (!result)
+    if (!result || result.tweets.length < 1)
       return (
         <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80">
           <TbCameraSelfie className=" text-[100px]" />
