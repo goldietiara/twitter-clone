@@ -47,7 +47,7 @@ export async function fetchPosts(pageNumber = 1, pagesize = 20) {
 interface CreateTweetParams {
   text: string;
   author: string;
-  image?: string;
+  image: string | null;
   communityId: string | null;
   path: string;
 }
@@ -66,13 +66,18 @@ export async function createTweet({
       { id: communityId },
       { _id: 1 }
     );
+
     //create tweet
     const createdTweet = await Tweet.create({
       text,
       author,
-      image,
+      image: !image ? null : image,
       community: communityIdObject,
     });
+
+    if (image) {
+      createdTweet.image = image;
+    }
 
     await User.findByIdAndUpdate(author, {
       $push: { tweets: createdTweet._id },

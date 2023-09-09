@@ -49,8 +49,8 @@ export default function TweetCard({
   return (
     //article usually used to create card
     <article
-      className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+      className={`flex w-full flex-col border-b-2 border-b-dark-4 pb-5${
+        isComment ? "px-0 xs:px-7" : " p-7"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -75,20 +75,22 @@ export default function TweetCard({
               </h4>
             </Link>
 
-            <p className="mt-2 text-small-regular text-light-2">{content}</p>
-            {image ? (
-              <div className="relative h-fit overflow-auto w-full bg-pink-300">
-                <Image
-                  src={image}
-                  alt="tweet_image"
-                  width={500}
-                  height={500}
-                  className=" rounded-md col-span-1"
-                />
-              </div>
-            ) : (
-              ""
-            )}
+            <Link href={`/tweet/${id}`}>
+              <p className="mt-2 text-small-regular text-light-2">{content}</p>
+              {image ? (
+                <div className="relative h-fit overflow-auto w-full">
+                  <Image
+                    src={image}
+                    alt="tweet_image"
+                    width={500}
+                    height={500}
+                    className=" rounded-md col-span-1"
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </Link>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">

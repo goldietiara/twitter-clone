@@ -82,6 +82,38 @@ export async function fetchUserPosts(userId: string) {
         },
       ],
     });
+
+    return tweets;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user posts: ${error.message}`);
+  }
+}
+export async function fetchUserMedia(userId: string) {
+  try {
+    connectToDB();
+    // Find all tweets authored by the user with the given userId
+    const tweets = await User.findOne({ id: userId }).populate({
+      path: "tweets",
+      model: Tweet,
+      match: { image: { $exists: true } },
+      populate: [
+        {
+          path: "community",
+          model: Community,
+          select: "name id image _id", // Select the "name" and "_id" fields from the "Community" model
+        },
+        {
+          path: "children",
+          model: Tweet,
+          populate: {
+            path: "author",
+            model: User,
+            select: "name image id", // Select the "name" and "_id" fields from the "User" model
+          },
+        },
+      ],
+    });
+
     return tweets;
   } catch (error: any) {
     throw new Error(`Failed to fetch user posts: ${error.message}`);
@@ -156,7 +188,7 @@ export async function getActivity(userId: string) {
     }).populate({
       path: "author",
       model: User,
-      select: "name image _id",
+      select: "name image _id ",
     });
 
     return replies;

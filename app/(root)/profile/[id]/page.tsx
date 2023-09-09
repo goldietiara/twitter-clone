@@ -45,17 +45,6 @@ export default async function UserProfile({ params }: UserProfileParams) {
                   className="object-contain"
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
-
-                {tab.label === "Tweets" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {userInfo.tweets.length}
-                  </p>
-                )}
-                {tab.label === "Likes" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {userInfo.likes.length}
-                  </p>
-                )}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -65,6 +54,14 @@ export default async function UserProfile({ params }: UserProfileParams) {
               accountId={userInfo.id}
               userInfoId={userInfo._id}
               accountType="User"
+            />
+          </TabsContent>
+          <TabsContent value="media" className="w-full text-light-1">
+            <TweetsTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              userInfoId={userInfo._id}
+              accountType="Media"
             />
           </TabsContent>
           <TabsContent value="likes" className="w-full text-light-1">

@@ -30,10 +30,8 @@ export default async function Activity() {
                     className="rounded-full object-cover"
                   />
                   <p className="!text-small-regular text-light-1">
-                    <span className="mr-1 text-primary-500">
-                      {v.author.name}
-                    </span>
-                    replied to your tweet
+                    <span className="mr-1 text-blue">{v.author.name}</span>
+                    replied to your tweet "{v.text}"
                   </p>
                 </article>
               </Link>

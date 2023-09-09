@@ -33,32 +33,35 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
-
   const { organization } = useOrganization();
 
-  const form = useForm({
+  const form = useForm<any>({
     resolver: zodResolver(TweetValidation),
     defaultValues: {
       tweet: "",
-      image: "",
+      image: null,
       accountId: userId,
     },
   });
 
   function handleImage(
     e: React.ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void
+    fieldChange: (value: string | null) => void
   ) {
     e.preventDefault();
+    if (e.target.files?.length == 0) {
+      console.log("no image");
+      fieldChange(null);
 
-    const fileReader = new FileReader();
-
-    if (!files) {
-      return null;
+      return;
     } else if (e.target.files && e.target.files.length > 0) {
+      console.log("start inserting image");
+      const fileReader = new FileReader();
       const file = e.target.files[0];
 
       setFiles(Array.from(e.target.files));
+
+      console.log(files);
 
       if (!file.type.includes("image")) return;
 
@@ -66,33 +69,39 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
         const imageDataUrl = event.target?.result?.toString() || "";
         fieldChange(imageDataUrl);
       };
+      console.log("image inserted");
       fileReader.readAsDataURL(file);
     }
   }
 
   async function onSubmit(values: z.infer<typeof TweetValidation>) {
-    const blob = values.image;
-    if (!blob) return null;
-    else {
-      const hasImageChanged = isBase64Image(blob);
-
-      // upload image to uploadthing
-      if (hasImageChanged) {
-        const imageResponse = await startUpload(files);
-        if (imageResponse && imageResponse[0].fileUrl) {
-          values.image = imageResponse[0].fileUrl;
-        }
+    if (!values.image) {
+      // No image provided, proceed without uploading an image
+      console.log("no image");
+      await createTweet({
+        text: values.tweet,
+        author: userId,
+        image: values.image ? values.image : null,
+        communityId: organization ? organization.id : null,
+        path: pathname,
+      });
+      console.log("uploading tweets");
+    } else if (isBase64Image(values.image)) {
+      // Image is base64-encoded, proceed with image upload logic
+      const imageResponse = await startUpload(files);
+      if (imageResponse && imageResponse[0].fileUrl) {
+        values.image = imageResponse[0].fileUrl;
       }
+      console.log("uploading image");
+      await createTweet({
+        text: values.tweet,
+        author: userId,
+        image: values.image ? values.image : null,
+        communityId: organization ? organization.id : null,
+        path: pathname,
+      });
+      console.log("uploading tweets");
     }
-
-    await createTweet({
-      text: values.tweet,
-      author: userId,
-      image: values.image,
-      communityId: organization ? organization.id : null,
-      path: pathname,
-    });
-
     router.push("/");
   }
 
@@ -148,7 +157,9 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                   accept="image/**"
                   placeholder="Upload a photo"
                   className="account-form_image-input"
-                  onChange={(e) => handleImage(e, field.onChange)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleImage(e, field.onChange)
+                  }
                 />
               </FormControl>
               <FormMessage />

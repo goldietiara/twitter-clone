@@ -1,6 +1,5 @@
 "use client";
 import { createLike } from "@/lib/actions/like.actions";
-import { revalidatePath } from "next/cache";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { TbHeart, TbHeartFilled } from "react-icons/tb";
