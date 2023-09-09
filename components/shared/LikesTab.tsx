@@ -4,6 +4,7 @@ import TweetCard from "../cards/TweetCard";
 import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 import { fetchTweetById } from "@/lib/actions/tweet.actions";
 import { fetchLikedPosts } from "@/lib/actions/like.actions";
+import { TbMessage2Heart } from "react-icons/tb";
 
 type TweetsTabProps = {
   accountId: string;
@@ -18,7 +19,15 @@ export default async function LikesTab({
 }: TweetsTabProps) {
   const result = await fetchLikedPosts(accountId);
 
-  if (!result) redirect("/");
+  if (!result || result.length < 1)
+    return (
+      <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80">
+        <TbMessage2Heart className=" text-[100px]" />
+        <p>
+          You haven't like any a tweet, once you have they will show up here.
+        </p>
+      </span>
+    );
 
   return (
     <section className=" mt-9 flex flex-col gap-10">
@@ -33,6 +42,7 @@ export default async function LikesTab({
             name: v.author.name,
             image: v.author.image,
             id: v.author.id,
+            username: v.author.username,
           }}
           community={v.community}
           createdAt={v.createdAt}
