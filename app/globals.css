@@ -75,11 +75,11 @@
   }
 
   .leftsidebar {
-    @apply sticky left-0 top-0 z-20 flex h-screen w-[225px] flex-col justify-between overflow-auto border-r-2 border-r-dark-4 bg-black pb-5 pt-10 max-lg:hidden max-lg:justify-center;
+    @apply sticky left-0 top-0 z-20 flex h-screen w-[300px] flex-col justify-between overflow-auto border-r-2 border-r-dark-4 bg-black pb-5 pt-10 max-lg:hidden max-lg:justify-center;
   }
 
   .leftsidebar_link {
-    @apply relative flex justify-start items-center gap-2 rounded-full p-4;
+    @apply relative flex justify-start items-center gap-4 rounded-full py-4 px-8 w-full;
   }
 
   .pagination {

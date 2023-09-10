@@ -1,7 +1,13 @@
 "use client";
 import { sidebarLinks } from "@/constants";
-import { SignOutButton, SignedIn, UserButton, useAuth } from "@clerk/nextjs";
-import Image from "next/image";
+import {
+  OrganizationSwitcher,
+  SignOutButton,
+  SignedIn,
+  currentUser,
+  useAuth,
+} from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -18,9 +24,10 @@ export default function Leftbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { userId } = useAuth();
+
   return (
     <section className=" custom-scrollbar leftsidebar">
-      <div className="flex w-full flex-1 flex-col gap-6 px-6">
+      <div className="flex w-full flex-1 flex-col gap-2 px-6">
         {sidebarLinks.map((v) => {
           const isActive =
             (pathname.includes(v.route) && v.route.length > 1) ||
@@ -60,21 +67,29 @@ export default function Leftbar() {
 
         <Link
           href={"/create-tweet"}
-          className={` text-white bg-blue p-4 flex gap-2 rounded-full items-center first-letter 
+          className={` text-white bg-blue py-4 px-8 flex gap-4 rounded-full items-center first-letter
           ${pathname === "/create-tweet" ? " text-base-semibold" : ""}`}
         >
-          <TbFeather className="text-[25px]" /> Create Tweet
+          <TbFeather className="text-[25px] " /> Post
         </Link>
 
         {/* <UserButton /> */}
       </div>
 
-      <div className="mt-10 px-6">
+      <div className="flex justify-center items-center mt-8">
+        <OrganizationSwitcher
+          appearance={{
+            baseTheme: dark,
+            elements: {
+              organizationSwitcherTrigger: "py-2 px-4",
+            },
+          }}
+          hidePersonal={true}
+        ></OrganizationSwitcher>
         <SignedIn>
           <SignOutButton signOutCallback={() => router.push("/sign-in")}>
-            <div className="flex cursor-pointer gap-4 p-4">
-              <p className=" text-light-1 max-lg:hidden">Logout</p>
-              <HiOutlineLogout className=" text-white sm:text-heading3-bold" />
+            <div className=" cursor-pointer p-[11px] rounded-md hover:bg-white/5">
+              <HiOutlineLogout className=" text-white/20 text-heading3-bold" />
             </div>
           </SignOutButton>
         </SignedIn>

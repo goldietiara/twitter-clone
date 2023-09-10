@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { CreateOrganization, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Pagination from "@/components/shared/Pagination";
 import CommunityCard from "@/components/cards/CommunityCard";
@@ -27,7 +27,6 @@ async function Page({
   return (
     <>
       <h1 className="head-text">Communities</h1>
-
       <div className="mt-5">
         <Searchbar routeType="communities" />
       </div>
