@@ -5,6 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { HiOutlineLogout } from "react-icons/hi";
+import {
+  TbFeather,
+  TbHeart,
+  TbSmartHome,
+  TbUser,
+  TbUsers,
+  TbZoomFilled,
+} from "react-icons/tb";
 
 export default function Leftbar() {
   const router = useRouter();
@@ -26,14 +34,38 @@ export default function Leftbar() {
             <Link
               href={v.route}
               key={v.label}
-              className={`leftsidebar_link hover:bg-gray-700 transition-all ease-out duration-500
-                ${isActive && "bg-blue"}`}
+              className={`leftsidebar_link hover:bg-white/10 transition-all ease-out duration-500
+                ${isActive && " text-base-semibold"}`}
             >
-              <Image src={v.imgURL} alt={v.label} width={24} height={24} />
+              {/* <Image src={v.imgURL} alt={v.label} width={24} height={24} /> */}
+              <p className=" text-light-2 text-[25px]">
+                {v.label === "Home" ? (
+                  <TbSmartHome />
+                ) : v.label === "Search" ? (
+                  <TbZoomFilled />
+                ) : v.label === "Activity" ? (
+                  <TbHeart />
+                ) : v.label === "Create Tweet" ? (
+                  <TbFeather />
+                ) : v.label === "Communities" ? (
+                  <TbUsers />
+                ) : (
+                  <TbUser />
+                )}
+              </p>
               <p className=" text-light-1 max-lg:hidden">{v.label}</p>
             </Link>
           );
         })}
+
+        <Link
+          href={"/create-tweet"}
+          className={` text-white bg-blue p-4 flex gap-2 rounded-full items-center first-letter 
+          ${pathname === "/create-tweet" ? " text-base-semibold" : ""}`}
+        >
+          <TbFeather className="text-[25px]" /> Create Tweet
+        </Link>
+
         {/* <UserButton /> */}
       </div>
 
