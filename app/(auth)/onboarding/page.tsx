@@ -3,6 +3,10 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: `Onboarding | Twitter by Goldie Tiara"`,
+};
+
 export default async function Page() {
   //clerk
   const user = await currentUser();

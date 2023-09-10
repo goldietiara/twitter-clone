@@ -3,6 +3,19 @@ import { redirect } from "next/navigation";
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 import UserCard from "@/components/cards/UserCard";
 import Searchbar from "@/components/shared/SearchBar";
+import { Metadata } from "next";
+
+export function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}): Metadata {
+  return {
+    title: `${
+      searchParams.q ? `Search for ${searchParams.q}` : "Connect"
+    } | Twitter by Goldie Tiara`,
+  };
+}
 
 export default async function Search({
   searchParams,

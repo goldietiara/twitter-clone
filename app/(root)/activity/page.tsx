@@ -4,6 +4,10 @@ import { fetchUser, getActivity } from "@/lib/actions/user.actions";
 import Link from "next/link";
 import Image from "next/image";
 
+export const metadata = {
+  title: `Notification | Twitter by Goldie Tiara"`,
+};
+
 export default async function Activity() {
   const user = await currentUser();
   if (!user) return null;
@@ -21,7 +25,7 @@ export default async function Activity() {
           <>
             {result.map((v) => (
               <Link key={v._id} href={`/tweet/${v.parentId}`}>
-                <article className="activity-card">
+                <article className="activity-card py-5">
                   <Image
                     src={v.author.image}
                     alt="user_logo"

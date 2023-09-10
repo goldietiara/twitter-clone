@@ -4,7 +4,6 @@ import {
   OrganizationSwitcher,
   SignOutButton,
   SignedIn,
-  currentUser,
   useAuth,
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
@@ -12,8 +11,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { HiOutlineLogout } from "react-icons/hi";
 import {
+  TbBell,
   TbFeather,
-  TbHeart,
   TbSmartHome,
   TbUser,
   TbUsers,
@@ -50,8 +49,8 @@ export default function Leftbar() {
                   <TbSmartHome />
                 ) : v.label === "Search" ? (
                   <TbZoomFilled />
-                ) : v.label === "Activity" ? (
-                  <TbHeart />
+                ) : v.label === "Notification" ? (
+                  <TbBell />
                 ) : v.label === "Create Tweet" ? (
                   <TbFeather />
                 ) : v.label === "Communities" ? (

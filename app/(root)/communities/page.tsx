@@ -6,6 +6,19 @@ import Searchbar from "@/components/shared/SearchBar";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import { fetchCommunities } from "@/lib/actions/community.actions";
+import { Metadata } from "next";
+
+export function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}): Metadata {
+  return {
+    title: `${
+      searchParams.q ? `Search for ${searchParams.q}` : "Communities"
+    } | Twitter by Goldie Tiara`,
+  };
+}
 
 async function Page({
   searchParams,
