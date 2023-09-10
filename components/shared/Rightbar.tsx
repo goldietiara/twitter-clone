@@ -2,6 +2,7 @@ import { fetchCommunities } from "@/lib/actions/community.actions";
 import { fetchUsers } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import UserCard from "../cards/UserCard";
+import Link from "next/link";
 
 export default async function Rightbar() {
   const user = await currentUser();
@@ -15,12 +16,14 @@ export default async function Rightbar() {
 
   return (
     <section className=" custom-scrollbar rightsidebar text-light-1">
-      <div className=" flex flex-1 flex-col justify-start">
-        <h3 className=" text-heading4-medium">Suggested Communities</h3>
-        <div className="mt-7 flex w-[350px] flex-col gap-9">
+      <div className=" flex flex-1 flex-col justify-start bg-dark-4 rounded-xl">
+        <h3 className=" indent-5 text-heading4-medium py-5">
+          Suggested Communities
+        </h3>
+        <div className=" flex w-[350px] flex-col">
           {suggestedCOmmunities.communities.length > 0 ? (
             <>
-              {suggestedCOmmunities.communities.map((community) => (
+              {suggestedCOmmunities.communities.slice(0, 3).map((community) => (
                 <UserCard
                   key={community.id}
                   id={community.id}
@@ -37,14 +40,20 @@ export default async function Rightbar() {
             </p>
           )}
         </div>
+        <Link
+          href={"/communities"}
+          className=" text-blue cursor-pointer indent-5 py-4 text-[15px] hover:bg-white/5"
+        >
+          Show More
+        </Link>
       </div>
 
-      <div className=" flex flex-1 flex-col justify-start">
-        <h3 className=" text-heading4-medium">Who to follow</h3>
-        <div className="mt-7 flex w-[350px] flex-col gap-10">
+      <div className=" flex flex-1 flex-col bg-dark-4 rounded-xl">
+        <h3 className=" indent-5 text-heading4-medium py-5">Who to follow</h3>
+        <div className=" flex w-[350px] flex-col items-start">
           {similarMinds.users.length > 0 ? (
             <>
-              {similarMinds.users.map((person) => (
+              {similarMinds.users.slice(0, 3).map((person) => (
                 <UserCard
                   key={person.id}
                   id={person.id}
@@ -59,6 +68,12 @@ export default async function Rightbar() {
             <p className="!text-base-regular text-light-3">No users yet</p>
           )}
         </div>
+        <Link
+          href={"/search"}
+          className=" text-blue cursor-pointer indent-5 py-4 text-[15px] hover:bg-white/5"
+        >
+          Show More
+        </Link>
       </div>
     </section>
   );

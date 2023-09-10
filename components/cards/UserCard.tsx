@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
 type UserCardProps = {
@@ -21,7 +20,16 @@ export default function UserCard({
 }: UserCardProps) {
   const router = useRouter();
   return (
-    <article className="user-card">
+    <button
+      className="user-card px-5 py-3 w-full h-full hover:bg-white/5"
+      onClick={() => {
+        if (personType === "Community") {
+          router.push(`/communities/${id}`);
+        } else {
+          router.push(`/profile/${id}`);
+        }
+      }}
+    >
       <div className="user-card_avatar">
         <div className="relative h-12 w-12">
           <Image
@@ -32,24 +40,11 @@ export default function UserCard({
           />
         </div>
 
-        <div className="flex-1 text-ellipsis">
+        <div className="flex-1 text-start">
           <h4 className="text-base-semibold text-light-1">{name}</h4>
           <p className="text-small-medium text-gray-1">@{username}</p>
         </div>
       </div>
-
-      <Button
-        className="user-card_btn"
-        // onClick={() => {
-        //   if (isCommunity) {
-        //     router.push(`/communities/${id}`);
-        //   } else {
-        //     router.push(`/profile/${id}`);
-        //   }
-        // }}
-      >
-        View
-      </Button>
-    </article>
+    </button>
   );
 }
