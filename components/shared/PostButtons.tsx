@@ -9,7 +9,7 @@ type PostButtonsProps = {
   post: string;
   likes: string[];
 };
-export default function PostButtons({
+export default function LikeButtons({
   userInfoId,
   post,
   likes,

@@ -36,6 +36,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboard) redirect("/onboarding");
+  console.log(userInfo._id);
 
   const communityDetails = await getCommunity(params.id);
 

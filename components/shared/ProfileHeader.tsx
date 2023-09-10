@@ -56,7 +56,9 @@ export default function ProfileHeader({
         )}
       </div>
 
-      <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
+      <p className="mt-6 max-w-lg text-base-regular text-light-2">
+        {type === "Community" ? "" : bio}
+      </p>
     </div>
   );
 }

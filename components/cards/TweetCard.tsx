@@ -2,7 +2,7 @@ import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteTweet from "../forms/DeleteTweet";
-import PostButtons from "../shared/PostButtons";
+import LikeButtons from "../shared/PostButtons";
 import { TbMessage2, TbShare2 } from "react-icons/tb";
 
 type TweetCardProps = {
@@ -106,7 +106,7 @@ export default function TweetCard({
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 <div className="flex gap-5 text-slate-400 cursor-pointer text-heading4-medium items-center">
-                  <PostButtons
+                  <LikeButtons
                     post={id}
                     userInfoId={userInfoId}
                     likes={likes}

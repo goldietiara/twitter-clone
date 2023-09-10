@@ -19,7 +19,6 @@ export default async function TweetsTab({
   let result: any;
   if (accountType === "Community") {
     result = await fetchCommunityPosts(accountId);
-    console.log(result.tweets);
   } else if (accountType === "User") {
     result = await fetchUserPosts(accountId);
     if (!result || result.tweets.length < 1)
@@ -50,26 +49,26 @@ export default async function TweetsTab({
           parentId={v.parentId}
           content={v.text}
           author={
-            accountType === "User" || "Media"
+            accountType == "Community"
               ? {
-                  name: result.name,
-                  image: result.image,
-                  id: result.id,
-                  username: result.username,
+                  id: v.author.id,
+                  name: v.author.name,
+                  username: v.author.username,
+                  image: v.author.image,
                 }
               : {
-                  name: v.author.name,
-                  image: v.author.image,
-                  id: v.author.id,
-                  username: v.result.username,
+                  id: result.id,
+                  name: result.name,
+                  username: result.username,
+                  image: result.image,
                 }
           }
           community={v.community}
           createdAt={v.createdAt}
           comments={v.children}
           image={v.image}
-          userInfoId={userInfoId}
           likes={v.likes}
+          userInfoId={userInfoId}
         />
       ))}
     </section>
