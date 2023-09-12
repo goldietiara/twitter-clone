@@ -52,10 +52,8 @@ export default function TweetCard({
   return (
     //article usually used to create card
     <article
-      className={`flex w-full flex-col pb-5${
-        isComment
-          ? "py-0 px-3 md:px-6 "
-          : "py-3 px-3 md:px-6 md:py-6 border-b-2 border-b-dark-4"
+      className={`flex w-full flex-col pb-5 py-3 px-3 ${
+        isComment ? "py-0 md:px-6 " : "px-3 md:py-6 border-b-2 border-b-dark-4"
       }`}
     >
       <div className="flex items-start justify-between">

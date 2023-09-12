@@ -22,6 +22,8 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import Image from "next/image";
 import { Input } from "../ui/input";
+import { PiXLight } from "react-icons/pi";
+import { TbPhoto } from "react-icons/tb";
 
 type PostTweetProps = {
   userId: string;
@@ -31,7 +33,7 @@ type PostTweetProps = {
 export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<File[] | null>([]);
   const { startUpload } = useUploadThing("media");
   const { organization } = useOrganization();
 
@@ -88,7 +90,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
       console.log("uploading tweets");
     } else if (isBase64Image(values.image)) {
       // Image is base64-encoded, proceed with image upload logic
-      const imageResponse = await startUpload(files);
+      const imageResponse = await startUpload(files!);
       if (imageResponse && imageResponse[0].fileUrl) {
         values.image = imageResponse[0].fileUrl;
       }
@@ -116,11 +118,16 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
           name="tweet"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
-              <FormLabel className="text-base-semibold text-light-2">
+              {/* <FormLabel className="text-base-semibold text-light-2">
                 Content
-              </FormLabel>
+              </FormLabel> */}
               <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
-                <Textarea rows={15} {...field} />
+                <Textarea
+                  placeholder="What is Happening?!"
+                  className=" border-none bg-transparent"
+                  rows={4}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -130,25 +137,38 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
           control={form.control}
           name="image"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-4">
-              <FormLabel className="account-form_image-label">
+            <FormItem className="flex-col items-center gap-2">
+              <FormLabel className="w-full">
                 {field.value ? (
-                  <Image
-                    src={field.value}
-                    alt="profile_icon"
-                    width={96}
-                    height={96}
-                    priority
-                    className="rounded-full object-contain"
-                  />
+                  <div className="w-full h-fit relative flex-col items-center gap-5 ">
+                    <Image
+                      src={field.value}
+                      alt="profile_icon"
+                      width={96}
+                      height={96}
+                      priority
+                      className="w-full rounded-2xl"
+                    />
+                    <button
+                      className=" absolute top-1 right-1 bg-black/50 p-2 rounded-full "
+                      onClick={(e: any) => {
+                        setFiles(null);
+                        handleImage(e, field.onChange);
+                      }}
+                    >
+                      <PiXLight className=" shrink-0 text-white " />
+                    </button>
+                  </div>
                 ) : (
-                  <Image
-                    src="/assets/profile.svg"
-                    alt="profile_icon"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />
+                  <div className=" flex w-full justify-end items-center gap-5 border-t-2 pt-5 border-dark-4">
+                    <TbPhoto className="shrink-0 cursor-pointer text-blue text-heading3-bold" />
+                    <Button
+                      type="submit"
+                      className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
+                    >
+                      {buttonTitle}
+                    </Button>
+                  </div>
                 )}
               </FormLabel>
               <FormControl className="flex-1 text-base-semibold text-gray-200">
@@ -156,22 +176,32 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                   type="file"
                   accept="image/**"
                   placeholder="Upload a photo"
-                  className="account-form_image-input"
+                  className="hidden"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleImage(e, field.onChange)
                   }
                 />
               </FormControl>
               <FormMessage />
+              {field.value ? (
+                <div
+                  className=" sticky bottom-0 border-t-2 border-dark-4 bg-dark-1 flex justify-end
+                mt-5 pt-5 pb-[84px]
+                md:pb-[120px]"
+                >
+                  <Button
+                    type="submit"
+                    className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
+                  >
+                    {buttonTitle}
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200"
-        >
-          {buttonTitle}
-        </Button>
       </form>
     </Form>
   );
