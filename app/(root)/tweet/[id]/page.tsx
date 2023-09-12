@@ -38,8 +38,7 @@ export default async function Tweet({ params }: TweetProps) {
 
   return (
     <section>
-      <h1 className="text-heading3-bold text-white">Home</h1>
-      <div className="mt-9 flex flex-col gap-10">
+      <div className="mt-9 flex flex-col">
         <TweetCard
           key={result._id}
           id={result._id}
@@ -55,7 +54,7 @@ export default async function Tweet({ params }: TweetProps) {
           userInfoId={userInfo._id}
         />
       </div>
-      <div className="mt-7">
+      <div>
         <Comment
           tweetId={params.id}
           currentUserImg={user.imageUrl}

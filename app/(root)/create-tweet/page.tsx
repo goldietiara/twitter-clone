@@ -17,7 +17,7 @@ export default async function CreateTweet() {
   if (!userInfo?.onboard) redirect("/onboarding");
 
   return (
-    <main>
+    <main className="px-10">
       <h1 className="head-text">Create Tweets</h1>
       <PostTweet userId={userInfo._id} buttonTitle="Post" />
     </main>

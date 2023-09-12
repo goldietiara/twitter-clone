@@ -10,7 +10,7 @@ export default async function Home() {
   const user = await currentUser();
   if (!user)
     return (
-      <span className="flex flex-col gap-3 justify-center mt-36 items-center m-auto text-[45px] text-white">
+      <span className="flex flex-col gap-3 justify-center mt-24 items-center m-auto text-[45px] text-white">
         <Image src="/logo.png" width={200} height={200} alt="logo" />
         <p>
           Hi, Please{" "}
@@ -29,7 +29,9 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="text-heading3-bold text-white hidden lg:flex">Home</h1>
+      <h1 className="text-heading3-bold text-white hidden lg:flex px-10 ">
+        Home
+      </h1>
       <section className="lg:mt-9  flex flex-col">
         {result.post.length === 0 ? (
           <p className="no-result">No tweets found</p>

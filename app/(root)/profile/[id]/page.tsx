@@ -68,6 +68,7 @@ export default async function UserProfile({ params }: UserProfileParams) {
               </TabsTrigger>
             ))}
           </TabsList>
+
           <TabsContent value="tweets" className="w-full text-light-1">
             <TweetsTab
               currentUserId={user.id}

@@ -40,7 +40,7 @@ export default async function TweetsTab({
   }
 
   return (
-    <section className=" mt-9 flex flex-col gap-10">
+    <section className=" flex flex-col">
       {result.tweets.map((v: any) => (
         <TweetCard
           key={v._id}

@@ -55,7 +55,10 @@ export default function Comment({
 
   return (
     <Form {...form}>
-      <form className="comment-form" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="comment-form px-3 md:px-6"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="tweet"

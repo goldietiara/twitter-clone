@@ -52,8 +52,10 @@ export default function TweetCard({
   return (
     //article usually used to create card
     <article
-      className={`flex w-full flex-col border-b-2 border-b-dark-4 pb-5${
-        isComment ? "px-0 xs:px-7" : " p-7"
+      className={`flex w-full flex-col pb-5${
+        isComment
+          ? "py-0 px-3 md:px-6 "
+          : "py-3 px-3 md:px-6 md:py-6 border-b-2 border-b-dark-4"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -67,8 +69,7 @@ export default function TweetCard({
                 className="cursor-pointer rounded-full"
               />
             </Link>
-
-            <div className="tweet-card_bar" />
+            {isComment ? <div className="tweet-card_bar" /> : ""}
           </div>
 
           <div className="flex w-full flex-col">
