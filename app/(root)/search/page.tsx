@@ -39,7 +39,7 @@ export default async function Search({
     <section className="mx-5">
       <h1 className="head-text mb-10">Search</h1>
 
-      <div className="mt-5">
+      <div className="mt-3">
         <Searchbar routeType="search" />
       </div>
       <div className="mt-14 flex flex-col">
