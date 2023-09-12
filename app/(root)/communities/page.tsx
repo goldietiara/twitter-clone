@@ -38,7 +38,7 @@ async function Page({
   });
 
   return (
-    <div className="mx-10">
+    <div className="mx-5">
       <h1 className="head-text">Communities</h1>
       <div className="mt-5">
         <Searchbar routeType="communities" />

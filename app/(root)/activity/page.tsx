@@ -17,7 +17,7 @@ export default async function Activity() {
 
   const result = await getActivity(userInfo._id);
   return (
-    <>
+    <div className="mx-5">
       <h1 className="head-text">Notifications</h1>
 
       <section className="mt-10 flex flex-col gap-5">
@@ -47,6 +47,6 @@ export default async function Activity() {
           </p>
         )}
       </section>
-    </>
+    </div>
   );
 }
