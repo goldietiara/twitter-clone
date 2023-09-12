@@ -24,6 +24,7 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { PiXLight } from "react-icons/pi";
 import { TbPhoto } from "react-icons/tb";
+import { RiLoader4Fill, RiLoader5Fill } from "react-icons/ri";
 
 type PostTweetProps = {
   userId: string;
@@ -36,6 +37,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
   const [files, setFiles] = useState<File[] | null>([]);
   const { startUpload } = useUploadThing("media");
   const { organization } = useOrganization();
+  const [pending, setPending] = useState<boolean>(false);
 
   const form = useForm<any>({
     resolver: zodResolver(TweetValidation),
@@ -77,6 +79,8 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
   }
 
   async function onSubmit(values: z.infer<typeof TweetValidation>) {
+    setPending(true);
+
     if (!values.image) {
       // No image provided, proceed without uploading an image
       console.log("no image");
@@ -87,6 +91,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
         communityId: organization ? organization.id : null,
         path: pathname,
       });
+
       console.log("uploading tweets");
     } else if (isBase64Image(values.image)) {
       // Image is base64-encoded, proceed with image upload logic
@@ -105,6 +110,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
       console.log("uploading tweets");
     }
     router.push("/");
+    setPending(false);
   }
 
   return (
@@ -151,9 +157,9 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                     />
                     <button
                       className=" absolute top-1 right-1 bg-black/50 p-2 rounded-full "
-                      onClick={(e: any) => {
-                        setFiles(null);
-                        handleImage(e, field.onChange);
+                      onClick={(e) => {
+                        e.preventDefault();
+                        form.resetField("image");
                       }}
                     >
                       <PiXLight className=" shrink-0 text-white " />
@@ -166,7 +172,14 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                       type="submit"
                       className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
                     >
-                      {buttonTitle}
+                      {pending ? (
+                        <div className="relative w-fit h-[24px] animate-spin">
+                          <RiLoader5Fill className=" shrink-0 text-heading3-bold " />
+                          <RiLoader4Fill className=" shrink-0 text-heading3-bold absolute bottom-0 text-white/30" />
+                        </div>
+                      ) : (
+                        buttonTitle
+                      )}
                     </Button>
                   </div>
                 )}
@@ -193,7 +206,14 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                     type="submit"
                     className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
                   >
-                    {buttonTitle}
+                    {pending ? (
+                      <div className="relative w-fit h-[24px] animate-spin">
+                        <RiLoader5Fill className=" shrink-0 text-heading3-bold " />
+                        <RiLoader4Fill className=" shrink-0 text-heading3-bold absolute bottom-0 text-white/30" />
+                      </div>
+                    ) : (
+                      buttonTitle
+                    )}
                   </Button>
                 </div>
               ) : (

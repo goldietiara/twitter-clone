@@ -38,7 +38,7 @@ export default async function Tweet({ params }: TweetProps) {
 
   return (
     <section>
-      <div className="mt-9 flex flex-col">
+      <div className=" flex flex-col">
         <TweetCard
           key={result._id}
           id={result._id}

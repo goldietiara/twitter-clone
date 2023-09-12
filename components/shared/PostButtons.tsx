@@ -2,6 +2,7 @@
 import { createLike } from "@/lib/actions/like.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { RiLoader4Fill, RiLoader5Fill } from "react-icons/ri";
 import { TbHeart, TbHeartFilled } from "react-icons/tb";
 
 type PostButtonsProps = {
@@ -33,20 +34,15 @@ export default function LikeButtons({
       className="flex gap-1 cursor-pointer items-center group"
       onClick={() => addLike()}
     >
-      {likes.includes(userInfoId) ? (
-        <TbHeartFilled
-          className={
-            pending ? ` animate-pulse text-pink-700` : ` text-pink-700`
-          }
-        />
+      {pending ? (
+        <div className="relative w-fit h-[18px] animate-spin">
+          <RiLoader5Fill className=" shrink-0 text-body-bold text-pink-700" />
+          <RiLoader4Fill className=" shrink-0 text-body-bold absolute bottom-0 text-pink-700/30" />
+        </div>
+      ) : likes.includes(userInfoId) ? (
+        <TbHeartFilled className={` text-pink-700`} />
       ) : (
-        <TbHeart
-          className={
-            pending
-              ? ` animate-bounce group-hover:text-pink-700 text-gray-400`
-              : ` group-hover:text-pink-700 text-gray-400`
-          }
-        />
+        <TbHeart className={` group-hover:text-pink-700 text-gray-400`} />
       )}
       <span
         className={

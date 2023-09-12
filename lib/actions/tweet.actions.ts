@@ -208,7 +208,8 @@ export async function addCommentToTweet(
   tweetId: string,
   commentText: string,
   userId: string,
-  path: string
+  path: string,
+  image: string | null
 ) {
   try {
     connectToDB();
@@ -221,6 +222,7 @@ export async function addCommentToTweet(
       text: commentText,
       author: userId,
       parentId: tweetId,
+      image: image,
     });
 
     const saveCommentTweet = await commentTweet.save();
