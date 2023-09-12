@@ -38,7 +38,7 @@ async function Page({
   });
 
   return (
-    <>
+    <div className="mx-10">
       <h1 className="head-text">Communities</h1>
       <div className="mt-5">
         <Searchbar routeType="communities" />
@@ -69,7 +69,7 @@ async function Page({
         pageNumber={searchParams?.page ? +searchParams.page : 1}
         isNext={result.isNext}
       />
-    </>
+    </div>
   );
 }
 
