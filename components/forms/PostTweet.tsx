@@ -170,7 +170,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                     <TbPhoto className="shrink-0 cursor-pointer text-blue text-heading3-bold" />
                     <Button
                       type="submit"
-                      className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
+                      className=" bg-blue hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
                     >
                       {pending ? (
                         <div className="relative w-fit h-[24px] animate-spin">
