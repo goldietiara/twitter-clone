@@ -87,19 +87,6 @@ export default function TweetCard({
               <p className="mt-2 text-small-regular text-light-2 mb-2">
                 {content}
               </p>
-              {image ? (
-                <div className="relative h-fit overflow-auto w-full">
-                  <Image
-                    src={image}
-                    alt="tweet_image"
-                    width={500}
-                    height={500}
-                    className=" rounded-md col-span-1"
-                  />
-                </div>
-              ) : (
-                ""
-              )}
             </Link>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>

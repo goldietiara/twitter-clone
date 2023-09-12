@@ -36,7 +36,7 @@ export default async function Search({
   });
 
   return (
-    <section>
+    <section className="mx-10">
       <h1 className="head-text mb-10">Search</h1>
 
       <div className="mt-5">
