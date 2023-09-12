@@ -43,7 +43,6 @@ export default function Leftbar() {
               className={`leftsidebar_link hover:bg-white/10 transition-all ease-out duration-500
                 ${isActive && " text-base-semibold"}`}
             >
-              {/* <Image src={v.imgURL} alt={v.label} width={24} height={24} /> */}
               <p className=" text-light-2 text-[25px]">
                 {v.label === "Home" ? (
                   <TbSmartHome />
@@ -51,8 +50,6 @@ export default function Leftbar() {
                   <TbZoomFilled />
                 ) : v.label === "Notification" ? (
                   <TbBell />
-                ) : v.label === "Create Tweet" ? (
-                  <TbFeather />
                 ) : v.label === "Communities" ? (
                   <TbUsers />
                 ) : (
