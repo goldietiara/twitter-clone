@@ -9,8 +9,8 @@ import {
   TbSmartHome,
   TbUser,
   TbUsers,
-  TbZoomFilled,
 } from "react-icons/tb";
+import { IoSearchSharp } from "react-icons/io5";
 
 export default function Bottombar() {
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function Bottombar() {
                   {v.label === "Home" ? (
                     <TbSmartHome />
                   ) : v.label === "Search" ? (
-                    <TbZoomFilled />
+                    <IoSearchSharp />
                   ) : v.label === "Notification" ? (
                     <TbBell />
                   ) : v.label === "Communities" ? (

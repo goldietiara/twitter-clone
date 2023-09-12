@@ -71,7 +71,7 @@ export async function createTweet({
     const createdTweet = await Tweet.create({
       text,
       author,
-      image: !image ? null : image,
+      image: image,
       community: communityIdObject,
     });
 
