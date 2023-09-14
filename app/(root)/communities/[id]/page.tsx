@@ -67,12 +67,6 @@ async function Page({ params }: { params: { id: string } }) {
                   )}
                 </p>
                 <p className="max-sm:hidden pl-3">{tab.label}</p>
-
-                {tab.label === "Tweets" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {communityDetails.tweets.length}
-                  </p>
-                )}
               </TabsTrigger>
             ))}
           </TabsList>

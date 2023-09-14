@@ -52,8 +52,10 @@ export default function TweetCard({
   return (
     //article usually used to create card
     <article
-      className={`flex w-full flex-col pb-5 py-3 px-3 ${
-        isComment ? "py-0 md:px-6 " : "px-3 md:py-6 border-b-2 border-b-dark-4"
+      className={`flex w-full flex-col px-3 ${
+        isComment
+          ? "py-0 md:px-6 "
+          : "px-3 py-3 md:py-6 border-b-2 border-b-dark-4"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -94,7 +96,7 @@ export default function TweetCard({
                     alt={"content-image"}
                     width={300}
                     height={300}
-                    className=" rounded-xl"
+                    className=" rounded-xl w-full max-w-xl"
                   />
                 </div>
               ) : (
@@ -116,7 +118,9 @@ export default function TweetCard({
                     className="flex items-center gap-1 hover:text-sky-400 transition-all ease-out duration-200 cursor-pointer"
                   >
                     <TbMessage2 />
-                    <p className="text-small-regular">{comments.length}</p>
+                    <p className="text-small-regular">
+                      {comments.length >= 1 ? comments.length : ""}
+                    </p>
                   </Link>
 
                   <TbShare2 className=" hover:text-emerald-400 transition-all ease-out duration-200 cursor-pointer" />

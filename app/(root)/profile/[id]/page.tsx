@@ -77,6 +77,7 @@ export default async function UserProfile({ params }: UserProfileParams) {
               accountType="User"
             />
           </TabsContent>
+
           <TabsContent value="media" className="w-full text-light-1">
             <TweetsTab
               currentUserId={user.id}
@@ -85,6 +86,7 @@ export default async function UserProfile({ params }: UserProfileParams) {
               accountType="Media"
             />
           </TabsContent>
+
           <TabsContent value="likes" className="w-full text-light-1">
             <LikesTab
               userInfoId={LikePosts._id}

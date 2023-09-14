@@ -1,8 +1,4 @@
-import { fetchUserPosts } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
 import TweetCard from "../cards/TweetCard";
-import { fetchCommunityPosts } from "@/lib/actions/community.actions";
-import { fetchTweetById } from "@/lib/actions/tweet.actions";
 import { fetchLikedPosts } from "@/lib/actions/like.actions";
 import { TbMessage2Heart } from "react-icons/tb";
 
@@ -30,7 +26,7 @@ export default async function LikesTab({
     );
 
   return (
-    <section className=" mt-9 flex flex-col gap-10">
+    <section className=" flex flex-col">
       {result.map((v: any) => (
         <TweetCard
           key={v._id}
@@ -41,7 +37,7 @@ export default async function LikesTab({
           author={{
             name: v.author.name,
             image: v.author.image,
-            id: v.author.id,
+            id: v.author._id,
             username: v.author.username,
           }}
           community={v.community}

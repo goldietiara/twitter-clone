@@ -41,7 +41,7 @@ function Searchbar({ routeType }: Props) {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder={`${
-          routeType !== "/search" ? "Search people" : "Search communities"
+          routeType === "search" ? "Search people" : "Search communities"
         }`}
         className="no-focus searchbar_input"
       />

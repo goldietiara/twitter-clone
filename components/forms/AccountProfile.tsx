@@ -21,6 +21,7 @@ import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
+import { RiLoader4Fill, RiLoader5Fill } from "react-icons/ri";
 
 interface AccountProfileProps {
   user: {
@@ -41,6 +42,7 @@ export default function AccountProfile({
   const pathname = usePathname();
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
+  const [pending, setPending] = useState<boolean>(false);
   const { startUpload } = useUploadThing("media");
 
   const form = useForm({
@@ -77,6 +79,8 @@ export default function AccountProfile({
   }
 
   async function onSubmit(values: z.infer<typeof UserValidation>) {
+    setPending(true);
+
     const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
@@ -104,8 +108,10 @@ export default function AccountProfile({
 
     if (pathname === "/profile/edit") {
       router.back();
+      setPending(false);
     } else {
       router.push("/");
+      setPending(false);
     }
   }
 
@@ -215,7 +221,14 @@ export default function AccountProfile({
           type="submit"
           className=" bg-sky-500 hover:bg-gray-700 transition-all ease-in duration-200"
         >
-          {buttonTitle}
+          {pending ? (
+            <div className="relative w-fit h-[24px] animate-spin">
+              <RiLoader5Fill className=" shrink-0 text-heading3-bold " />
+              <RiLoader4Fill className=" shrink-0 text-heading3-bold absolute bottom-0 text-white/30" />
+            </div>
+          ) : (
+            buttonTitle
+          )}{" "}
         </Button>
       </form>
     </Form>

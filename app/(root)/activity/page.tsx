@@ -1,8 +1,13 @@
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { fetchUser, getActivity } from "@/lib/actions/user.actions";
+import {
+  fetchUser,
+  fetchUserPosts,
+  getActivity,
+} from "@/lib/actions/user.actions";
 import Link from "next/link";
 import Image from "next/image";
+import { fetchTweetById } from "@/lib/actions/tweet.actions";
 
 export const metadata = {
   title: `Notification | Twitter by Goldie Tiara"`,
@@ -35,7 +40,7 @@ export default async function Activity() {
                   />
                   <p className="!text-small-regular text-light-1">
                     <span className="mr-1 text-blue">{v.author.name}</span>
-                    replied to your tweet "{v.text}"
+                    replied to your tweet "{v.text.slice(0, 100)}"
                   </p>
                 </article>
               </Link>

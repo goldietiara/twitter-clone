@@ -53,7 +53,7 @@ export async function getUserLikes(userInfoId: string) {
 
     const user = await User.findOne({ _id: userInfoId }).populate({
       path: "likes",
-      select: "_id text author username",
+      select: "_id text author ",
       populate: {
         path: "author",
         select: "_id id",

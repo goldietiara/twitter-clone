@@ -38,10 +38,22 @@ async function Page({
   });
 
   return (
-    <div className="mx-3">
-      <h1 className="head-text">Communities</h1>
-      <div className="mt-5">
-        <Searchbar routeType="communities" />
+    <div className="mx-5 relative">
+      <div
+        className=" pb-1 bg-dark-1 z-20
+      sticky top-16
+      lg:top-10"
+      >
+        <h1
+          className="head-text 
+        pb-5 hidden
+        md:pb-10 lg:flex"
+        >
+          Communities
+        </h1>
+        <div className="pt-3">
+          <Searchbar routeType="communities" />
+        </div>
       </div>
 
       <section className="mt-9 flex flex-wrap gap-9 ">

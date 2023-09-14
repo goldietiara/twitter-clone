@@ -36,13 +36,25 @@ export default async function Search({
   });
 
   return (
-    <section className="mx-5">
-      <h1 className="head-text mb-10">Search</h1>
+    <section className="mx-5 relative">
+      <div
+        className=" pb-1 bg-dark-1 z-20
+      sticky top-16
+      lg:top-10"
+      >
+        <h1
+          className="head-text 
+        pb-5 hidden
+        md:pb-10 lg:flex"
+        >
+          Search
+        </h1>
 
-      <div className="mt-3">
-        <Searchbar routeType="search" />
+        <div className="pt-3">
+          <Searchbar routeType="search" />
+        </div>
       </div>
-      <div className="mt-14 flex flex-col">
+      <div className="flex flex-col">
         {result.users.length === 0 ? (
           <p className="no-result">No Result</p>
         ) : (

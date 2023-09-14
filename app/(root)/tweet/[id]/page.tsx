@@ -77,7 +77,7 @@ export default async function Tweet({ params }: TweetProps) {
             comments={v.children}
             likes={v.likes}
             userInfoId={userInfo._id}
-            isComment
+            isComment={true}
           />
         ))}
       </div>
