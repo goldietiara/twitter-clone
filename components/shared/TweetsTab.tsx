@@ -23,7 +23,7 @@ export default async function TweetsTab({
     result = await fetchUserPosts(accountId);
     if (!result || result.tweets.length < 1)
       return (
-        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80">
+        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5">
           <TbMessageChatbot className=" text-[100px]" />
           <p>When you post a tweet, they will show up here.</p>
         </span>
@@ -32,7 +32,7 @@ export default async function TweetsTab({
     result = await fetchUserMedia(accountId);
     if (!result || result.tweets.length < 1)
       return (
-        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80">
+        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5">
           <TbCameraSelfie className=" text-[100px]" />
           <p>When you post photos or videos, they will show up here.</p>
         </span>
