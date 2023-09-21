@@ -59,7 +59,7 @@ export default async function Search({
           <p className="no-result">No Result</p>
         ) : (
           <>
-            {result.users.slice(0, 10).map((v) => (
+            {result.users.map((v) => (
               <UserCard
                 key={v.id}
                 id={v.id}
