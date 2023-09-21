@@ -61,7 +61,7 @@ async function Page({
           <p className="no-result">No Result</p>
         ) : (
           <>
-            {result.communities.map((community) => (
+            {result.communities.slice(0, 10).map((community) => (
               <CommunityCard
                 key={community.id}
                 id={community.id}
