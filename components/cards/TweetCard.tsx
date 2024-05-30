@@ -55,7 +55,7 @@ export default function TweetCard({
       className={`flex w-full flex-col px-3 ${
         isComment
           ? "py-0 md:px-6 "
-          : "px-3 py-3 md:py-6 border-b-2 border-b-dark-4"
+          : "px-3 py-3 md:py-6 border-b-[1px] border-b-zinc-700"
       }`}
     >
       <div className="flex items-start justify-between">

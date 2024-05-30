@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { RiLoader4Fill, RiLoader5Fill } from "react-icons/ri";
 import { TbHeart, TbHeartFilled } from "react-icons/tb";
+import { redirect } from "next/navigation";
 
 type PostButtonsProps = {
   userInfoId: string;
@@ -20,6 +21,8 @@ export default function LikeButtons({
   const [pending, setPending] = useState<boolean>(false);
 
   async function addLike() {
+    if (userInfoId === "") router.push("/onboarding");
+
     setPending(true);
     await createLike({
       userInfoId: userInfoId,

@@ -1,11 +1,9 @@
 import TweetCard from "@/components/cards/TweetCard";
+import PostTweet from "@/components/forms/PostTweet";
 import Pagination from "@/components/shared/Pagination";
 import { fetchPosts } from "@/lib/actions/tweet.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import Image from "next/image";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function Home({
   searchParams,
@@ -13,22 +11,8 @@ export default async function Home({
   searchParams: { [key: string]: string | undefined };
 }) {
   const user = await currentUser();
-  if (!user)
-    return (
-      <span className="flex flex-col gap-3 justify-center mt-24 items-center m-auto text-[45px] text-white">
-        <Image src="/logo.png" width={200} height={200} alt="logo" />
-        <p>
-          Hi, Please{" "}
-          <Link href={"/sign-in"} className=" underline hover:text-blue">
-            login
-          </Link>{" "}
-          first
-        </p>
-      </span>
-    );
 
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboard) redirect("/onboarding");
+  const userInfo = await fetchUser(user ? user.id : "");
 
   const result = await fetchPosts(
     searchParams.page ? +searchParams.page : 1,
@@ -39,7 +23,22 @@ export default async function Home({
       <h1 className="text-heading3-bold text-white hidden lg:flex px-10 ">
         Home
       </h1>
-      <section className="lg:mt-9  flex flex-col">
+      <section
+        className={`lg:mt-3 flex flex-col border-b-[1px] border-b-zinc-700 pb-5 ${
+          userInfo ? "flex" : "hidden"
+        }`}
+      >
+        <div className="px-5">
+          <PostTweet
+            userId={userInfo ? userInfo._id : ""}
+            buttonTitle="Post"
+            image={userInfo ? userInfo.image : ""}
+          />
+        </div>
+      </section>
+      <section
+        className={` flex flex-col ${userInfo ? "lg:mt-0" : "lg:mt-9 "}`}
+      >
         {result.post.length === 0 ? (
           <p className="no-result">No tweets found</p>
         ) : (
@@ -57,7 +56,7 @@ export default async function Home({
                 createdAt={v.createdAt}
                 comments={v.children}
                 likes={v.likes}
-                userInfoId={userInfo._id}
+                userInfoId={userInfo ? userInfo._id : ""}
               />
             ))}
           </>

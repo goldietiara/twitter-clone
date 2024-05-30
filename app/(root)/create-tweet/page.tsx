@@ -19,7 +19,11 @@ export default async function CreateTweet() {
   return (
     <main className="px-10">
       <h1 className="head-text">Create Tweets</h1>
-      <PostTweet userId={userInfo._id} buttonTitle="Post" />
+      <PostTweet
+        userId={userInfo._id}
+        buttonTitle="Post"
+        image={userInfo.image}
+      />
     </main>
   );
 }

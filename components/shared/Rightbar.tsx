@@ -6,10 +6,9 @@ import Link from "next/link";
 
 export default async function Rightbar() {
   const user = await currentUser();
-  if (!user) return null;
 
   const similarMinds = await fetchUsers({
-    userId: user.id,
+    userId: user ? user.id : "user_2UFa1k49bJJ08X08Zxof7Ydl0R2",
     pageSize: 4,
   });
   const suggestedCOmmunities = await fetchCommunities({ pageSize: 4 });

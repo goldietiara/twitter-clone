@@ -29,9 +29,14 @@ import { RiLoader4Fill, RiLoader5Fill } from "react-icons/ri";
 type PostTweetProps = {
   userId: string;
   buttonTitle: string;
+  image: string;
 };
 
-export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
+export default function PostTweet({
+  userId,
+  buttonTitle,
+  image,
+}: PostTweetProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [files, setFiles] = useState<File[] | null>([]);
@@ -119,26 +124,38 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className=" mt-10 flex flex-col justify-start gap-8"
       >
-        <FormField
-          control={form.control}
-          name="tweet"
-          render={({ field }) => (
-            <FormItem className="flex w-full flex-col gap-3">
-              {/* <FormLabel className="text-base-semibold text-light-2">
+        <div className=" flex">
+          <div className="relative h-11 w-11">
+            <Image
+              src={image}
+              alt={"content-image"}
+              width={300}
+              height={300}
+              className=" rounded-full w-full max-w-xl"
+            />
+          </div>
+          <FormField
+            control={form.control}
+            name="tweet"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col gap-3">
+                {/* <FormLabel className="text-base-semibold text-light-2">
                 Content
               </FormLabel> */}
-              <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
-                <Textarea
-                  placeholder="What is Happening?!"
-                  className=" border-none bg-transparent"
-                  rows={4}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormControl className="no-focus border border-zinc-700 bg-dark-3 text-light-1">
+                  <Textarea
+                    placeholder="What is Happening?!"
+                    className=" border-none bg-transparent"
+                    rows={4}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="image"
@@ -166,8 +183,8 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
                     </button>
                   </div>
                 ) : (
-                  <div className=" flex w-full justify-end items-center gap-5 border-t-2 pt-5 border-dark-4">
-                    <TbPhoto className="shrink-0 cursor-pointer text-blue text-heading3-bold" />
+                  <div className=" flex w-full justify-end items-center gap-5 border-t-[1px] pt-5 border-zinc-700">
+                    <TbPhoto className="shrink-0 cursor-pointer text-blue hover:text-gray-700 transition-all ease-in duration-200 text-heading3-bold" />
                     <Button
                       type="submit"
                       className=" bg-blue hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
@@ -198,7 +215,7 @@ export default function PostTweet({ userId, buttonTitle }: PostTweetProps) {
               <FormMessage />
               {field.value ? (
                 <div
-                  className=" sticky bottom-0 border-t-2 border-dark-4 bg-dark-1 flex justify-end
+                  className=" sticky bottom-0 border-t-[1px] border-zinc-700 bg-dark-1 flex justify-end
                 mt-5 pt-5 pb-[84px]
                 md:pb-[120px]"
                 >
