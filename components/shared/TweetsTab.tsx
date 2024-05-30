@@ -23,8 +23,8 @@ export default async function TweetsTab({
     result = await fetchUserPosts(accountId);
     if (!result || result.tweets.length < 1)
       return (
-        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5">
-          <TbMessageChatbot className=" text-[100px]" />
+        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5 text-[12px] md:text-base-regular">
+          <TbMessageChatbot className=" text-[70px] md:text-[100px]" />
           <p>When you post a tweet, they will show up here.</p>
         </span>
       );
@@ -32,15 +32,15 @@ export default async function TweetsTab({
     result = await fetchUserMedia(accountId);
     if (!result || result.tweets.length < 1)
       return (
-        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5">
-          <TbCameraSelfie className=" text-[100px]" />
+        <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5 text-[12px] md:text-base-regular">
+          <TbCameraSelfie className=" text-[70px] md:text-[100px]" />
           <p>When you post photos or videos, they will show up here.</p>
         </span>
       );
   }
 
   return (
-    <section className=" flex flex-col">
+    <section className=" flex flex-col-reverse">
       {result.tweets.map((v: any) => (
         <TweetCard
           key={v._id}

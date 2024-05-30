@@ -17,8 +17,8 @@ export default async function LikesTab({
 
   if (!result || result.length < 1)
     return (
-      <span className="flex flex-col gap-3 justify-center mt-10 mx-5 items-center m-auto text-light-2/80">
-        <TbMessage2Heart className=" text-[100px]" />
+      <span className="flex flex-col gap-3 justify-center mt-10 items-center m-auto text-light-2/80 mx-5 text-[12px] md:text-base-regular">
+        <TbMessage2Heart className=" text-[70px] md:text-[100px]" />
         <p>
           You haven't like any a tweet, once you have they will show up here.
         </p>

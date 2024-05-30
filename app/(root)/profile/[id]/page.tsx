@@ -27,7 +27,7 @@ export async function generateMetadata({
 }: UserProfileParams): Promise<Metadata> {
   const user = await getUser(params.id);
   return {
-    title: `${user.name} (@${user.username}) | Twitter by Goldie Tiara"`,
+    title: `${user?.name} (@${user.username}) | Twitter by Goldie Tiara"`,
   };
 }
 

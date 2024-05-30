@@ -95,7 +95,7 @@ export async function fetchUserMedia(userId: string) {
     const tweets = await User.findOne({ id: userId }).populate({
       path: "tweets",
       model: Tweet,
-      match: { image: { $exists: true } },
+      match: { image: { $exists: true, $ne: null } },
       populate: [
         {
           path: "community",
