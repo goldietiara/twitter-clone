@@ -115,6 +115,8 @@ export default function PostTweet({
       console.log("uploading tweets");
     }
     router.push("/");
+    form.resetField("image");
+    form.resetField("tweet");
     setPending(false);
   }
 
@@ -128,7 +130,7 @@ export default function PostTweet({
           <div className="relative h-11 w-11">
             <Image
               src={image}
-              alt={"content-image"}
+              alt={"profile-image"}
               width={300}
               height={300}
               className=" rounded-full w-full max-w-xl"
@@ -139,9 +141,6 @@ export default function PostTweet({
             name="tweet"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
-                {/* <FormLabel className="text-base-semibold text-light-2">
-                Content
-              </FormLabel> */}
                 <FormControl className="no-focus border border-zinc-700 bg-dark-3 text-light-1">
                   <Textarea
                     placeholder="What is Happening?!"
@@ -161,46 +160,50 @@ export default function PostTweet({
           name="image"
           render={({ field }) => (
             <FormItem className="flex-col items-center gap-2">
-              <FormLabel className="w-full">
-                {field.value ? (
-                  <div className="w-full h-fit relative flex-col items-center gap-5 ">
-                    <Image
-                      src={field.value}
-                      alt="profile_icon"
-                      width={96}
-                      height={96}
-                      priority
-                      className="w-full rounded-2xl"
-                    />
-                    <button
-                      className=" absolute top-1 right-1 bg-black/50 p-2 rounded-full "
-                      onClick={(e) => {
-                        e.preventDefault();
-                        form.resetField("image");
-                      }}
+              <div className=" flex w-full items-center justify-end gap-5 border-t-[1px] pt-5 border-zinc-700">
+                <FormLabel className={field.value ? `w-full` : `w-fit`}>
+                  {field.value ? (
+                    <div
+                      className={`w-full h-fit relative flex-col items-center gap-5`}
                     >
-                      <PiXLight className=" shrink-0 text-white " />
-                    </button>
-                  </div>
-                ) : (
-                  <div className=" flex w-full justify-end items-center gap-5 border-t-[1px] pt-5 border-zinc-700">
+                      <Image
+                        src={field.value}
+                        alt="content"
+                        width={96}
+                        height={96}
+                        priority
+                        className="w-full rounded-2xl"
+                      />
+                      <button
+                        className=" absolute top-1 right-1 bg-black/50 p-2 rounded-full "
+                        onClick={(e) => {
+                          e.preventDefault();
+                          form.resetField("image");
+                        }}
+                      >
+                        <PiXLight className=" shrink-0 text-white " />
+                      </button>
+                    </div>
+                  ) : (
                     <TbPhoto className="shrink-0 cursor-pointer text-blue hover:text-gray-700 transition-all ease-in duration-200 text-heading3-bold" />
-                    <Button
-                      type="submit"
-                      className=" bg-blue hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
-                    >
-                      {pending ? (
-                        <div className="relative w-fit h-[24px] animate-spin">
-                          <RiLoader5Fill className=" shrink-0 text-heading3-bold " />
-                          <RiLoader4Fill className=" shrink-0 text-heading3-bold absolute bottom-0 text-white/30" />
-                        </div>
-                      ) : (
-                        buttonTitle
-                      )}
-                    </Button>
-                  </div>
+                  )}
+                </FormLabel>
+                {!field.value && (
+                  <Button
+                    type="submit"
+                    className=" bg-blue hover:bg-gray-700 transition-all ease-in duration-200 w-[80px] rounded-full"
+                  >
+                    {pending ? (
+                      <div className="relative w-fit h-[24px] animate-spin">
+                        <RiLoader5Fill className=" shrink-0 text-heading3-bold " />
+                        <RiLoader4Fill className=" shrink-0 text-heading3-bold absolute bottom-0 text-white/30" />
+                      </div>
+                    ) : (
+                      buttonTitle
+                    )}
+                  </Button>
                 )}
-              </FormLabel>
+              </div>
               <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <Input
                   type="file"

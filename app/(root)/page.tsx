@@ -23,6 +23,7 @@ export default async function Home({
       <h1 className="text-heading3-bold text-white hidden lg:flex px-10 ">
         Home
       </h1>
+
       <section
         className={`lg:mt-3 flex flex-col border-b-[1px] border-b-zinc-700 pb-5 ${
           userInfo ? "flex" : "hidden"
