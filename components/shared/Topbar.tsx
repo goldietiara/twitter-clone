@@ -16,7 +16,7 @@ export default function Topbar() {
   const router = useRouter();
 
   return (
-    <nav className="topbar ">
+    <div className="topbar ">
       <Link href={"/"} className="flex items-end justify-end gap-3">
         <Image
           src={"/logo.png"}
@@ -51,6 +51,6 @@ export default function Topbar() {
           </SignOutButton>
         </SignedIn>
       </div>
-    </nav>
+    </div>
   );
 }

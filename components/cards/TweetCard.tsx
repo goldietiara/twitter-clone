@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteTweet from "../forms/DeleteTweet";
 import LikeButtons from "../shared/PostButtons";
-import { TbMessage2, TbShare2 } from "react-icons/tb";
+import { TbMessage2 } from "react-icons/tb";
+import ShareButton from "../shared/ShareButton";
 
 type TweetCardProps = {
   id: string;
@@ -122,8 +123,7 @@ export default function TweetCard({
                       {comments.length >= 1 ? comments.length : ""}
                     </p>
                   </Link>
-
-                  <TbShare2 className=" hover:text-emerald-400 transition-all ease-out duration-200 cursor-pointer" />
+                  <ShareButton tweetId={id} />
                 </div>
               </div>
 

@@ -4,7 +4,6 @@ import { fetchTweetById } from "@/lib/actions/tweet.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { cache } from "react";
 
 type TweetProps = {
@@ -28,13 +27,10 @@ export async function generateMetadata({
 
 export default async function Tweet({ params }: TweetProps) {
   const user = await currentUser();
-  if (!user) return null;
 
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboard) redirect("/onboarding");
+  const userInfo = await fetchUser(user ? user.id : "");
 
   const result = await getTweet(params.id);
-  // const result = await getTweet(id);
 
   return (
     <section>
@@ -42,7 +38,7 @@ export default async function Tweet({ params }: TweetProps) {
         <TweetCard
           key={result._id}
           id={result._id}
-          currentUserId={user?.id || ""}
+          currentUserId={user ? user.id : ""}
           image={result.image}
           parentId={result.parentId}
           content={result.text}
@@ -51,14 +47,14 @@ export default async function Tweet({ params }: TweetProps) {
           createdAt={result.createdAt}
           comments={result.children}
           likes={result.likes}
-          userInfoId={userInfo._id}
+          userInfoId={userInfo ? userInfo._id : ""}
         />
       </div>
-      <div>
+      <div className={userInfo ? "flex" : "hidden"}>
         <Comment
           tweetId={params.id}
-          currentUserImg={user.imageUrl}
-          currentUserId={JSON.stringify(userInfo._id)}
+          currentUserImg={userInfo ? userInfo.image : ""}
+          currentUserId={JSON.stringify(userInfo ? userInfo._id : "")}
           buttonTitle="Reply"
         />
       </div>
@@ -67,7 +63,7 @@ export default async function Tweet({ params }: TweetProps) {
           <TweetCard
             key={v._id}
             id={v._id}
-            currentUserId={user.id}
+            currentUserId={user ? user.id : ""}
             parentId={v.parentId}
             image={v.image}
             content={v.text}
