@@ -114,7 +114,7 @@ export default function Comment({
   return (
     <Form {...form}>
       <form
-        className="comment-form px-3 md:px-6"
+        className="comment-form px-3 md:px-6 w-full"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

@@ -12,7 +12,12 @@ type TweetProps = {
 
 const getTweet = cache(async (id: string) => {
   const result = await fetchTweetById(id);
-  if (!result) return null;
+  if (!result)
+    return (
+      <p className=" h-screen w-full fles justify-center items-center">
+        tweet not found
+      </p>
+    );
   return result;
 });
 
@@ -38,7 +43,7 @@ export default async function Tweet({ params }: TweetProps) {
         <TweetCard
           key={result._id}
           id={result._id}
-          currentUserId={user ? user.id : ""}
+          currentUserId={user?.id || ""}
           image={result.image}
           parentId={result.parentId}
           content={result.text}
@@ -50,7 +55,7 @@ export default async function Tweet({ params }: TweetProps) {
           userInfoId={userInfo ? userInfo._id : ""}
         />
       </div>
-      <div className={userInfo ? "flex" : "hidden"}>
+      <div className={userInfo ? "flex w-full" : "hidden"}>
         <Comment
           tweetId={params.id}
           currentUserImg={userInfo ? userInfo.image : ""}
@@ -63,7 +68,7 @@ export default async function Tweet({ params }: TweetProps) {
           <TweetCard
             key={v._id}
             id={v._id}
-            currentUserId={user ? user.id : ""}
+            currentUserId={user?.id || ""}
             parentId={v.parentId}
             image={v.image}
             content={v.text}
@@ -72,7 +77,7 @@ export default async function Tweet({ params }: TweetProps) {
             createdAt={v.createdAt}
             comments={v.children}
             likes={v.likes}
-            userInfoId={userInfo._id}
+            userInfoId={userInfo ? userInfo._id : ""}
             isComment={true}
           />
         ))}
